@@ -29,8 +29,18 @@ public class BoardVO implements Serializable {
 	// 수정자
 	private String updusr;
 	
+	// rownum
+	private int rownum;
 	
 	// Get set
+
+	public int getRownum() {
+		return rownum;
+	}
+
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
 
 	public int getBbsId() {
 		return bbsId;

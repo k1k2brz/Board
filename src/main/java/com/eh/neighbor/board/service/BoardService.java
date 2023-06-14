@@ -12,9 +12,10 @@ public interface BoardService  {
 	// Read
 	List<BoardVO> selectBoard(BoardVO boardVO);
 	// Update
+	void countBoard(BoardVO boardVO);
 	BoardVO selectUpdate(BoardVO boardVO);
 	void updateBoard(BoardVO boardVO);
 	// Delete
 	void deleteBoard(BoardVO boardVO);
-	
+
 }

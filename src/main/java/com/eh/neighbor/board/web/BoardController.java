@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eh.neighbor.board.service.BoardService;
@@ -52,11 +51,9 @@ public class BoardController {
 		
 		try {
 			map.put("resultFlag", "1");
-			System.out.print(map);
 			return map;
 		} catch (Exception e) {
 			map.put("error", e);
-			System.out.print(map);
 			return map;
 		}
 	}
@@ -65,8 +62,9 @@ public class BoardController {
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String boardUpdate(BoardVO boardVO, ModelMap model) throws Exception {
-		
+		boardService.countBoard(boardVO);
 		BoardVO selectUpdate = boardService.selectUpdate(boardVO);
+		
 		model.addAttribute("selectUpdate", selectUpdate);
 		
 		return "/board/BoardUpdate";
@@ -90,11 +88,9 @@ public class BoardController {
 		
 		try {
 			map.put("resultFlag", "1");
-			System.out.print(map);
 			return map;
 		} catch (Exception e) {
 			map.put("error", e);
-			System.out.print(map);
 			return map;
 		}
 	}
@@ -103,18 +99,15 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value = "/deleteAction", method = RequestMethod.POST)
 	public Map<String, Object> boardDelete(BoardVO boardVO, ModelMap model) throws Exception {
-		System.out.print(boardVO.getBbsId());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		boardService.deleteBoard(boardVO);
 		
 		try {
 			map.put("resultFlag", "1");
-			System.out.print(map);
 			return map;
 		} catch (Exception e) {
 			map.put("error", e);
-			System.out.print(map);
 			return map;
 		}
 	}

@@ -41,4 +41,9 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteBoard(BoardVO boardVO) {
 		boardMapper.deleteBoard(boardVO);
 	}
+
+	@Override
+	public void countBoard(BoardVO boardVO) {
+		boardMapper.countBoard(boardVO);
+	}
 }

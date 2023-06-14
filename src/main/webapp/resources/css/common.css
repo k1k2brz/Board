@@ -19,6 +19,10 @@
     margin-bottom: 7px;
 }
 
+.update_title {
+    margin-bottom: 20px;
+}
+
 .header > h1 {
     display: flex;
     justify-content: flex-start;
@@ -133,8 +137,21 @@
     margin-top: 30px;
 }
 
+.write_cnt_wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
 .write_text {
-    font-size: 20px;
+    font-size: 15px;
+}
+
+.write_text_info {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 12px;
 }
 
 .write_buttons {
@@ -167,6 +184,10 @@
 
 .update_title {
     width: 910px;
+}
+
+.read_content {
+    min-height: 150px;
 }
 
 /* 공통 CSS설정 */

@@ -12,23 +12,31 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
         <div class="container">
             <div>
                 <header>
-                    <h1 class="header">게시글 보기</h1>
+                    <h1 class="update_title"><c:out value="${selectUpdate.bbsSj}" /></h1>
                 </header>
                 <hr />
                 <section>
                     <form class="send_button" id="frm" name="frm" method="post">
                         <input type="hidden" id="bbsId" name="bbsId" value='<c:out value="${selectUpdate.bbsId}" />' />
-                        <div class="write_title">
-                            <h3 class="update_title"><c:out value="${selectUpdate.bbsSj}" /></h3>
+                        <div class="write_user write_cnt_wrap">
+                            <div class="write_text_info">
+                                <P>작성자: <c:out value="${selectUpdate.wrter}" />&nbsp; &nbsp;</P>
+                                <p>수정자: <c:out value="${selectUpdate.updusr}" /></p>
+                            </div>
+                            <div class="write_text_info">
+                                <p>조회: <c:out value="${selectUpdate.rdcnt}" /> &nbsp; &nbsp;</p>
+                                <p>작성일: 
+                                    <c:out value="${selectUpdate.writngDt.substring(0,19)}" />&nbsp; &nbsp;
+                                </p>
+                                <p>
+                                    수정일:  <c:out value="${selectUpdate.updtDt.substring(0,19)}" />
+                                </p>
+                            </div>
                         </div>
-                        <div class="write_user">
-                            <P class="write_text"><c:out value="${selectUpdate.wrter}" /></P>
-                            <p>조회수</p>
-                        </div>
-                        <div class="write_content">
-                            <P class="write_text">내용</P>
+                        <div class="write_content read_content">
                             <span><c:out value="${selectUpdate.bbsCn}" /></span>
                         </div>
+                        <hr />
                         <div class="write_buttons">
                             <input
                                 class="default_button update_button"
@@ -55,6 +63,8 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
         </div>
     </body>
     <script>
+        // row num(Query), 수정자 나오게
+        
         function onUpdateWrite(id) {
             const form = $("#frm")[0];
             $("#bbsId").val(id);
