@@ -47,6 +47,74 @@
     color: white;
 }
 
+/* 검색 기능 */
+.board_search-container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+}
+
+.board_search-date {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.board_search-date>p {
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.board_search-input {
+    margin-left: 8px;
+    margin-top: 2px;
+    padding: 8px;
+    border: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 40%;
+    height: 100%;
+}
+
+.search-date-input {
+    width: 20%;
+    border: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.board_search-select {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.board_search-submit {
+    padding: 8px 14px;
+    margin-left: 8px;
+    background-color: cadetblue;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.board_search-submit:hover {
+    background-color: rgb(86, 146, 148);
+}
+
+.board_search-submit > span {
+    color: white;
+}
 
 /* 게시판 MAIN */
 
@@ -115,7 +183,7 @@
 .board_page {
     display: flex;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 25px;
 }
 
 .board_page_button {
@@ -246,8 +314,9 @@ html {
     line-height: 1.3;
 }
 
-body {
-    overflow-x: hidden;
+ul {
+    list-style-type: none;
+    list-style: none;
 }
 
 html,

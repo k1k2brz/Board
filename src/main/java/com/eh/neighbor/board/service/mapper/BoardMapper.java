@@ -7,7 +7,9 @@ import com.eh.neighbor.board.service.vo.BoardVO;
 public interface BoardMapper {
 	
 	public void writeBoard(BoardVO boardVO);
+	
 	public List<BoardVO> selectBoard(BoardVO boardVO);
+	
 	public BoardVO selectUpdate(BoardVO boardVO);
 	public void countBoard(BoardVO boardVO);
 	

@@ -32,7 +32,29 @@ public class BoardVO implements Serializable {
 	// rownum
 	private int rownum;
 	
+	// 검색어
+	private String searchWriter;
+	
+	// 검색 카테고리
+	private String searchSelect;
+	
 	// Get set
+
+	public String getSearchSelect() {
+		return searchSelect;
+	}
+
+	public void setSearchSelect(String searchSelect) {
+		this.searchSelect = searchSelect;
+	}
+
+	public String getSearchWriter() {
+		return searchWriter;
+	}
+
+	public void setSearchWriter(String searchWriter) {
+		this.searchWriter = searchWriter;
+	}
 
 	public int getRownum() {
 		return rownum;

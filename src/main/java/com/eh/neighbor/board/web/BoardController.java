@@ -26,10 +26,10 @@ public class BoardController {
 	
 	@RequestMapping("/")
 	public String boardView(BoardVO boardVO, ModelMap model) throws Exception {
-		
 		List<BoardVO> selectBoard = boardService.selectBoard(boardVO);
 		
 		model.addAttribute("selectBoard", selectBoard);
+		model.addAttribute("searchWritten", boardVO.getSearchWriter());
 		
 		return "/board/BoardList";
 	}

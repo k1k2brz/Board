@@ -7,22 +7,42 @@
 
 	<insert id="writeBoard"
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO">
-		insert into tb_bbs (bbs_sj, wrter, bbs_cn) values(#{bbsSj}, #{wrter}, #{bbsCn})
+		insert into tb_bbs (bbs_sj, wrter, bbs_cn)
+		values(#{bbsSj}, #{wrter}, #{bbsCn})
 	</insert>
+
+
 
 	<select id="selectBoard"
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO"
 		resultType="com.eh.neighbor.board.service.vo.BoardVO">
 		SELECT row_number() over(order by bbs_id) as rownum,
-		bbs_id, bbs_sj, wrter, bbs_cn, writng_dt, updt_dt, rdcnt, updusr 
-		from tb_bbs order by bbs_id desc
+		bbs_id, bbs_sj,
+		wrter, bbs_cn, writng_dt, updt_dt, rdcnt, updusr
+		from tb_bbs
+		<where>
+		<if test="searchWriter != null and searchWriter != ''">
+			<if test="searchSelect == 'writer'">
+					and wrter like concat ('%', #{searchWriter}, '%')
+			</if>
+			<if test="searchSelect == 'title'">
+					and bbs_sj like concat ('%', #{searchWriter}, '%')
+			</if>
+			<if test="searchSelect == 'content'">
+					and bbs_cn like concat ('%', #{searchWriter}, '%')
+			</if>
+		</if>
+		</where>
+		order by bbs_id desc
 	</select>
-	
+
 	<update id="countBoard"
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO">
 		update tb_bbs set rdcnt=rdcnt+1 where bbs_Id=#{bbsId}
 	</update>
-	
+
+
+
 	<select id="selectUpdate"
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO"
 		resultType="com.eh.neighbor.board.service.vo.BoardVO">
@@ -31,9 +51,12 @@
 
 	<update id="updateBoard"
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO">
-		update tb_bbs set bbs_sj=#{bbsSj}, updusr=#{wrter}, bbs_cn=#{bbsCn}, updt_dt=now() where bbs_id=#{bbsId}
+		update tb_bbs set bbs_sj=#{bbsSj}, updusr=#{wrter},
+		bbs_cn=#{bbsCn}, updt_dt=now() where bbs_id=#{bbsId}
 	</update>
-	
+
+
+
 	<delete id="deleteBoard"
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO">
 		delete from tb_bbs where bbs_id=#{bbsId}
