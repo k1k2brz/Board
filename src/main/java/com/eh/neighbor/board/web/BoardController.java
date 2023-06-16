@@ -27,9 +27,11 @@ public class BoardController {
 	@RequestMapping("/")
 	public String boardView(BoardVO boardVO, ModelMap model) throws Exception {
 		List<BoardVO> selectBoard = boardService.selectBoard(boardVO);
+		int searchCount = boardService.searchCount(boardVO);
 		
 		model.addAttribute("selectBoard", selectBoard);
-		model.addAttribute("searchWritten", boardVO.getSearchWriter());
+		model.addAttribute("searchBoard", boardVO);
+		model.addAttribute("searchCount", searchCount);
 		
 		return "/board/BoardList";
 	}
@@ -58,17 +60,23 @@ public class BoardController {
 		}
 	}
 	
-	// Update
+	// 게시글 하나씩 보기
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String boardUpdate(BoardVO boardVO, ModelMap model) throws Exception {
 		boardService.countBoard(boardVO);
 		BoardVO selectUpdate = boardService.selectUpdate(boardVO);
+		BoardVO selectPrev = boardService.selectPrev(boardVO);
+		BoardVO selectNext = boardService.selectNext(boardVO);
 		
 		model.addAttribute("selectUpdate", selectUpdate);
+		model.addAttribute("selectPrev", selectPrev);
+		model.addAttribute("selectNext", selectNext);
 		
 		return "/board/BoardUpdate";
 	}
+	
+	// Update
 	
 	@RequestMapping(value = "/updateWrite", method = RequestMethod.POST)
 	public String boardUpdateWrite(BoardVO boardVO, ModelMap model) throws Exception {

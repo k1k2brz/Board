@@ -9,8 +9,11 @@ public interface BoardMapper {
 	public void writeBoard(BoardVO boardVO);
 	
 	public List<BoardVO> selectBoard(BoardVO boardVO);
+	public int searchCount(BoardVO boardVO);
 	
 	public BoardVO selectUpdate(BoardVO boardVO);
+	public BoardVO selectPrev(BoardVO boardVO);
+	public BoardVO selectNext(BoardVO boardVO);
 	public void countBoard(BoardVO boardVO);
 	
 	public void updateBoard(BoardVO boardVO);

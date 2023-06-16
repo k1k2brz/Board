@@ -12,8 +12,11 @@ public interface BoardService  {
 	
 	// Read
 	List<BoardVO> selectBoard(BoardVO boardVO);
+	int searchCount(BoardVO boardVO);
+	BoardVO selectPrev(BoardVO boardVO);
+	BoardVO selectNext(BoardVO boardVO);
 	
-	// Update
+	// Update 
 	void countBoard(BoardVO boardVO);
 	BoardVO selectUpdate(BoardVO boardVO);
 	void updateBoard(BoardVO boardVO);

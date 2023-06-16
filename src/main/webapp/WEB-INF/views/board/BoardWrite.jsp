@@ -18,15 +18,48 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                 <form class="send_button" id="frm" name="frm" method="post">
                     <div class="write_title">
                         <P class="write_text">제목</P>
-                        <input class="title" type="text" id="bbsSj" name="bbsSj" />
+                        <input
+                            class="title"
+                            type="text"
+                            id="bbsSj"
+                            name="bbsSj"
+                            maxlength="50"
+                            placeholder="제목을 입력해주세요."
+                        />
                     </div>
                     <div class="write_user">
                         <P class="write_text">작성자</P>
-                        <input class="writer" type="text" id="wrter" name="wrter" />
+                        <input
+                            class="writer"
+                            type="text"
+                            id="wrter"
+                            name="wrter"
+                            maxlength="14"
+                            placeholder="작성자를 입력해주세요."
+                        />
+                    </div>
+                    <div class="write_user">
+                        <P class="write_text">비밀번호</P>
+                        <input
+                            class="password"
+                            type="password"
+                            id="password"
+                            name="password"
+                            maxlength="14"
+                            placeholder="수정시 사용할 비밀번호를 입력해주세요."
+                        />
                     </div>
                     <div class="write_content">
                         <P class="write_text">내용</P>
-                        <textarea class="content" rows="12" cols="80" id="bbsCn" name="bbsCn"></textarea>
+                        <textarea
+                            class="content"
+                            rows="12"
+                            cols="80"
+                            id="bbsCn"
+                            name="bbsCn"
+                            maxlength="2000"
+                            placeholder="내용을 입력해주세요."
+                        ></textarea>
                     </div>
                     <div class="write_buttons">
                         <input
@@ -55,9 +88,10 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                 const title = document.querySelector(".title");
                 const writer = document.querySelector(".writer");
                 const content = document.querySelector(".content");
+                const password = document.querySelector(".password");
                 e.preventDefault();
 
-                if (title.value.trim() === "" || writer.value.trim() === "" || content.value.trim() === "") {
+                if (title.value.trim() === "" || writer.value.trim() === "" || content.value.trim() === "" || password.value.trim() === "") {
                     alert("공백은 사용 불가능합니다.");
                 } else {
                     $.ajax({
@@ -77,7 +111,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                             }
                         },
                         error: function (xhr, error) {
-                            console.log("res : " + xhr);
+                            console.error("res : " + xhr);
                             console.log("e : " + error);
                             alert("ERROR");
                         },

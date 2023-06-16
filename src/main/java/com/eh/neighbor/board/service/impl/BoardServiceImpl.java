@@ -28,6 +28,21 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
+	public int searchCount(BoardVO boardVO) {
+		return boardMapper.searchCount(boardVO);
+	}
+
+	@Override
+	public BoardVO selectPrev(BoardVO boardVO) {
+		return boardMapper.selectPrev(boardVO);
+	}
+	
+	@Override
+	public BoardVO selectNext(BoardVO boardVO) {
+		return boardMapper.selectNext(boardVO);
+	}
+	
+	@Override
 	public BoardVO selectUpdate(BoardVO boardVO) {
 		return boardMapper.selectUpdate(boardVO);
 	}

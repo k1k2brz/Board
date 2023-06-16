@@ -4,41 +4,76 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class BoardVO implements Serializable {
-	
-	//	사용자 ID
+
+	// 사용자 ID
 	private int bbsId;
-	
+
 	// 제목
 	private String bbsSj;
-	
+
 	// 작성자
 	private String wrter;
-	
+
 	// 내용
 	private String bbsCn;
 	
+	// 비번
+	private String password;
+
 	// 작성일
 	private String writngDt;
-	
+
 	// 수정일
 	private String updtDt;
-	
+
 	// 조회수
 	private int rdcnt;
-	
+
 	// 수정자
 	private String updusr;
-	
+
 	// rownum
 	private int rownum;
-	
+
 	// 검색어
 	private String searchWriter;
-	
+
 	// 검색 카테고리
 	private String searchSelect;
+
+	// 게시글 카운트
+	private int searchCount;
+
+	// 날짜 검색
+	private String searchDateL;
+	private String searchDateR;
 	
-	// Get set
+	
+	// Getter Setter
+
+	public String getSearchDateL() {
+		return searchDateL;
+	}
+
+	public void setSearchDateL(String searchDateL) {
+		this.searchDateL = searchDateL;
+	}
+
+	public String getSearchDateR() {
+		return searchDateR;
+	}
+
+	public void setSearchDateR(String searchDateR) {
+		this.searchDateR = searchDateR;
+	}
+	
+	public int getSearchCount() {
+		return searchCount;
+	}
+
+	public void setSearchCount(int searchCount) {
+		this.searchCount = searchCount;
+	}
 
 	public String getSearchSelect() {
 		return searchSelect;
@@ -95,6 +130,14 @@ public class BoardVO implements Serializable {
 	public void setBbsCn(String bbsCn) {
 		this.bbsCn = bbsCn;
 	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public String getWritngDt() {
 		return writngDt;
@@ -127,7 +170,5 @@ public class BoardVO implements Serializable {
 	public void setUpdusr(String updusr) {
 		this.updusr = updusr;
 	}
-	
-	
-	
+
 }

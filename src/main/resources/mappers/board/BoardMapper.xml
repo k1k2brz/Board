@@ -7,8 +7,8 @@
 
 	<insert id="writeBoard"
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO">
-		insert into tb_bbs (bbs_sj, wrter, bbs_cn)
-		values(#{bbsSj}, #{wrter}, #{bbsCn})
+		insert into tb_bbs (bbs_sj, wrter, bbs_cn, password)
+		values(#{bbsSj}, #{wrter}, #{bbsCn}, #{password})
 	</insert>
 
 
@@ -18,27 +18,58 @@
 		resultType="com.eh.neighbor.board.service.vo.BoardVO">
 		SELECT row_number() over(order by bbs_id) as rownum,
 		bbs_id, bbs_sj,
-		wrter, bbs_cn, writng_dt, updt_dt, rdcnt, updusr
+		wrter, bbs_cn, writng_dt, updt_dt, rdcnt,
+		updusr
 		from tb_bbs
-		<where>
+		where 1=1
 		<if test="searchWriter != null and searchWriter != ''">
 			<if test="searchSelect == 'writer'">
-					and wrter like concat ('%', #{searchWriter}, '%')
+				and wrter like concat ('%', #{searchWriter}, '%')
 			</if>
 			<if test="searchSelect == 'title'">
-					and bbs_sj like concat ('%', #{searchWriter}, '%')
+				and bbs_sj like concat ('%', #{searchWriter}, '%')
 			</if>
 			<if test="searchSelect == 'content'">
-					and bbs_cn like concat ('%', #{searchWriter}, '%')
+				and bbs_cn like concat ('%', #{searchWriter}, '%')
 			</if>
 		</if>
-		</where>
+		<if
+			test="searchDateL != null and searchDateL != '' and searchDateR != null and searchDateR != ''">
+			and writng_dt::date between #{searchDateL}::timestamp and
+			#{searchDateR}::date
+		</if>
+		<if
+			test="searchDateL != null and searchDateL != '' and searchDateR != null and searchDateR != ''">
+			and writng_dt::date between #{searchDateL}::timestamp and
+			#{searchDateR}::date
+		</if>
 		order by bbs_id desc
+	</select>
+
+	<select id="searchCount"
+		parameterType="com.eh.neighbor.board.service.vo.BoardVO"
+		resultType="java.lang.Integer">
+		SELECT
+		COUNT(bbs_id) as cnt
+		FROM tb_bbs
+		<where>
+			<if test="searchWriter != null and searchWriter != ''">
+				<if test="searchSelect == 'writer'">
+					and wrter like concat ('%', #{searchWriter}, '%')
+				</if>
+				<if test="searchSelect == 'title'">
+					and bbs_sj like concat ('%', #{searchWriter}, '%')
+				</if>
+				<if test="searchSelect == 'content'">
+					and bbs_cn like concat ('%', #{searchWriter}, '%')
+				</if>
+			</if>
+		</where>
 	</select>
 
 	<update id="countBoard"
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO">
-		update tb_bbs set rdcnt=rdcnt+1 where bbs_Id=#{bbsId}
+		update tb_bbs set rdcnt=COALESCE(rdcnt, 0)+1 where bbs_Id=#{bbsId}
 	</update>
 
 
@@ -49,10 +80,34 @@
 		select * from tb_bbs where bbs_id=#{bbsId}
 	</select>
 
+	<select id="selectPrev"
+		parameterType="com.eh.neighbor.board.service.vo.BoardVO"
+		resultType="com.eh.neighbor.board.service.vo.BoardVO">
+		<![CDATA[
+		select * from tb_bbs
+		where bbs_id < #{bbsId}
+		order by bbs_id desc
+		limit 1
+		]]>
+	</select>
+
+	<select id="selectNext"
+		parameterType="com.eh.neighbor.board.service.vo.BoardVO"
+		resultType="com.eh.neighbor.board.service.vo.BoardVO">
+		<![CDATA[
+		select * from tb_bbs where bbs_id > #{bbsId}
+		order by bbs_id asc
+		limit 1
+		]]>
+	</select>
+
+
+
 	<update id="updateBoard"
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO">
 		update tb_bbs set bbs_sj=#{bbsSj}, updusr=#{wrter},
-		bbs_cn=#{bbsCn}, updt_dt=now() where bbs_id=#{bbsId}
+		bbs_cn=#{bbsCn}, updt_dt=now()
+		where bbs_id=#{bbsId}
 	</update>
 
 

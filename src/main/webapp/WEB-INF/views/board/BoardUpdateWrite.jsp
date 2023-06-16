@@ -35,7 +35,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                                 type="text"
                                 name="wrter"
                                 class="writer"
-                                maxlength="30"
+                                maxlength="14"
                                 value='<c:out value="${selectUpdate.wrter}" />'
                             />
                         </div>

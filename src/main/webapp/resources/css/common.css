@@ -1,4 +1,5 @@
 .container {
+    position: relative;
     height: 100vh;
     width: 100%;
     display: flex;
@@ -65,7 +66,7 @@
     width: 100%;
 }
 
-.board_search-date>p {
+.board_search-date > p {
     margin-right: 8px;
     display: flex;
     align-items: center;
@@ -137,6 +138,11 @@
 
 .board_container {
     margin: 20px 0;
+}
+
+.board_context_container {
+    max-height: 55vh;
+    overflow: auto;
 }
 
 .board_context_wrapper {
@@ -234,6 +240,85 @@
     background-color: #888888;
 }
 
+/* 이전 - 다음글 보기 */
+.write_move_board {
+    display: flex;
+    flex-direction: column;
+}
+
+.prev_next {
+    display: flex;
+    align-items: center;
+}
+
+.prev_next > h5 {
+    margin: 4px 8px;
+}
+
+.prev_next > span {
+    margin-right: 8px;
+}
+
+.pn_button {
+    color: #3d3d3d;
+    cursor: pointer;
+}
+
+.pn_button:hover {
+    color: #000000;
+}
+
+/* 모달 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 20% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+}
+
+.modal-flex {
+    display: flex;
+}
+
+#passwordInput {
+    margin: 10px 0px;
+    border: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#confirmBtn {
+    margin-left: 4px;
+    padding: 12px 15px;
+    border-radius: 7px;
+    background-color: cadetblue;
+    cursor: pointer;
+    color: white;
+}
+
+#confirmBtn:hover {
+    background-color: rgb(86, 146, 148);
+}
+
+/* 게시글 수정시 추가 되는 것들 관련 */
 .update_button {
     background-color: cadetblue;
 }
@@ -437,3 +522,78 @@ nav,
 form {
     box-sizing: border-box;
 }
+
+/* datepicker */
+/* 
+.ui-widget-header { border: 0px solid #dddddd; background: #fff; } 
+
+.ui-datepicker-calendar>thead>tr>th { font-size: 14px !important; } 
+
+.ui-datepicker .ui-datepicker-header { position: relative; padding: 10px 0; } 
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-button,
+html .ui-button.ui-state-disabled:hover,
+html .ui-button.ui-state-disabled:active { border: 0px solid #c5c5c5; background-color: transparent; font-weight: normal; color: #454545; text-align: center; } 
+
+.ui-datepicker .ui-datepicker-title { margin: 0 0em; line-height: 16px; text-align: center; font-size: 14px; padding: 0px; font-weight: bold; } 
+
+.ui-datepicker { display: none; background-color: #fff; border-radius: 4px; margin-top: 10px; margin-left: 0px; margin-right: 0px; padding: 20px; padding-bottom: 10px; width: 300px; box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.1); } 
+
+.ui-widget.ui-widget-content { border: 1px solid #eee; } 
+
+#datepicker:focus>.ui-datepicker { display: block; } 
+
+.ui-datepicker-prev,
+.ui-datepicker-next { cursor: pointer; } 
+
+.ui-datepicker-next { float: right; } 
+
+.ui-state-disabled { cursor: auto; color: hsla(0, 0%, 80%, 1); } 
+
+.ui-datepicker-title { text-align: center; padding: 10px; font-weight: 100; font-size: 20px; } 
+
+.ui-datepicker-calendar { width: 100%; } 
+
+.ui-datepicker-calendar>thead>tr>th { padding: 5px; font-size: 20px; font-weight: 400; } 
+
+.ui-datepicker-calendar>tbody>tr>td>a { color: #000; font-size: 12px !important; font-weight: bold !important; text-decoration: none;}
+
+.ui-datepicker-calendar>tbody>tr>.ui-state-disabled:hover { cursor: auto; background-color: #fff; } 
+
+.ui-datepicker-calendar>tbody>tr>td { border-radius: 100%; width: 44px; height: 30px; cursor: pointer; padding: 5px; font-weight: 100; text-align: center; font-size: 12px; } 
+
+.ui-datepicker-calendar>tbody>tr>td:hover { background-color: transparent; opacity: 0.6; } 
+
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus,
+.ui-button:hover,
+.ui-button:focus { border: 0px solid #cccccc; background-color: transparent; font-weight: normal; color: #2b2b2b; } 
+
+.ui-widget-header .ui-icon { background-image: url('./btns.png'); } 
+
+.ui-icon-circle-triangle-e { background-position: -20px 0px; background-size: 36px; } 
+
+.ui-icon-circle-triangle-w { background-position: -0px -0px; background-size: 36px; } 
+
+.ui-datepicker-calendar>tbody>tr>td:first-child a { color: red !important; } 
+
+.ui-datepicker-calendar>tbody>tr>td:last-child a { color: #0099ff !important; } 
+
+.ui-datepicker-calendar>thead>tr>th:first-child { color: red !important; } 
+
+.ui-datepicker-calendar>thead>tr>th:last-child { color: #0099ff !important; } 
+
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight { border: 0px; background: #f1f1f1; border-radius: 50%; padding-top: 10px; padding-bottom: 10px; } 
+
+.inp { padding: 10px 10px; background-color: #f1f1f1; border-radius: 4px; border: 0px; } 
+
+.inp:focus { outline: none; background-color: #eee; }  */
