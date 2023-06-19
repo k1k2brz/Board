@@ -48,8 +48,56 @@ public class BoardVO implements Serializable {
 	private String searchDateL;
 	private String searchDateR;
 	
+	// 페이지네이션
+	private int prevPage;
+	private int currPage;
+	private int pageSize;
+	private int firstPage;
+	private int lastPage;
+	
 	
 	// Getter Setter
+	
+
+	public int getPrevPage() {
+		return prevPage;
+	}
+
+	public void setPrevPage(int prevPage) {
+		this.prevPage = prevPage;
+	}
+
+	public int getCurrPage() {
+		return currPage;
+	}
+
+	public void setCurrPage(int currPage) {
+		this.currPage = currPage;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getFirstPage() {
+		return firstPage;
+	}
+
+	public void setFirstPage(int firstPage) {
+		this.firstPage = firstPage;
+	}
+
+	public int getLastPage() {
+		return lastPage;
+	}
+
+	public void setLastPage(int lastPage) {
+		this.lastPage = lastPage;
+	}
 
 	public String getSearchDateL() {
 		return searchDateL;

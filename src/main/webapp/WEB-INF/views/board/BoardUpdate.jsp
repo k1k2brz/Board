@@ -79,15 +79,15 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         <hr />
                         <div class="write_buttons">
                             <input
-                                id="openModalBtn"
+                                id="updateModalBtn"
                                 class="default_button update_button"
                                 type="button"
                                 value="수정하기"
                             />
                             <input
+                                id="deleteModalBtn"
                                 class="default_button delete_button"
                                 type="button"
-                                onclick='onDelete(<c:out value="${selectUpdate.bbsId}" />)'
                                 value="삭제하기"
                             />
                             <input
@@ -105,10 +105,31 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
         <div id="passwordModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <h2>비밀번호 확인</h2>
+                <h2 style="margin-bottom: 25px">비밀번호 확인</h2>
                 <div class="modal-flex">
-                    <input type="password" id="passwordInput" placeholder="비밀번호를 입력하세요" />
-                    <button id="confirmBtn" onclick='onUpdateWrite(<c:out value="${selectUpdate.bbsId}" />)'>확인</button>
+                    <input
+                        type="password"
+                        id="passwordInput"
+                        class="passwordInput"
+                        placeholder="비밀번호를 입력하세요"
+                    />
+                    <button id="confirmBtn">확인</button>
+                </div>
+            </div>
+        </div>
+        <!-- delete modal -->
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 style="margin-bottom: 25px">삭제하기</h2>
+                <div class="modal-flex">
+                    <input
+                        type="password"
+                        id="deletePasswordInput"
+                        class="passwordInput"
+                        placeholder="비밀번호를 입력하세요"
+                    />
+                    <button id="confirmBtn" class="deleteConfirmBtn">확인</button>
                 </div>
             </div>
         </div>
@@ -132,15 +153,37 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             form.submit();
         }
 
-        function onUpdateWrite(id) {
-            const form = $("#frm")[0];
-            $("#bbsId").val(id);
-            form.action = "/updateWrite";
-            form.submit();
+        function onUpdateWrite(password) {
+            $.ajax({
+                url: "/passwordCompare",
+                type: "post",
+                dataType: "json",
+                processData: true,
+                cache: false,
+                data: { bbsId: Number($("#bbsId").val()), password},
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        console.log(response);
+                        const form = $("#frm")[0];
+                        // $("#bbsId").val();
+                        form.action = "/updateWrite";
+                        form.submit();
+                    } else {
+                        console.error(response.message);
+                        alert("ERROR Message : " + response.message);
+                    }
+                },
+                error: function (xhr, error) {
+                    console.error("res : " + xhr);
+                    console.log("e : " + error);
+                    alert("ERROR, 수정할 수 없습니다.");
+                },
+            });
         }
 
-        function onDelete(id) {
-            const body = { bbsId: Number(id) };
+        function onDelete(id, pw) {
+            const body = { bbsId: Number(id), password: pw };
             console.log(body);
             $.ajax({
                 url: "/deleteAction",
@@ -148,27 +191,28 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                 dataType: "json",
                 processData: true,
                 cache: false,
-                data: body,
-                success: function (data, status) {
-                    console.log(data.resultFlag, data, status);
-                    if (data.resultFlag === "1") {
-                        alert(status);
+                data: { bbsId: Number(id), password: pw },
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        console.log(response);
                         location.href = "/";
                     } else {
-                        alert("ERROR Message : Not " + status);
+                        console.error(response.message);
+                        alert("ERROR Message : " + response.message);
                     }
                 },
                 error: function (xhr, error) {
                     console.log("res : " + xhr);
                     console.log("e : " + error);
-                    alert("ERROR");
+                    alert("ERROR, 삭제할 수 없습니다.");
                 },
             });
         }
 
-        // Modal
+        // Modal관련 메소드
         $(document).ready(function () {
-            $("#openModalBtn").click(function () {
+            $("#updateModalBtn").click(function () {
                 $("#passwordModal").css("display", "block");
             });
 
@@ -180,19 +224,49 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             // 비밀번호 확인 버튼 클릭 이벤트
             $("#confirmBtn").click(function () {
                 const passwordInput = $("#passwordInput").val();
-                console.log('d')
-                // if (passwordInput === "password123") {
-                //     alert("비밀번호 확인 성공");
-                //     $("#passwordModal").css("display", "none");
-                // } else {
-                //     alert("비밀번호가 올바르지 않습니다");
-                // }
+                // 받아올 데이터 "1" 부분에 입력
+                if (passwordInput.trim() === "") {
+                    alert("비밀번호를 입력해주세요.");
+                } else {
+                    // alert("Success");
+                    $("#passwordModal").css("display", "none");
+                    onUpdateWrite(passwordInput);
+                }
             });
 
             // 모달 창 바깥 클릭 시 닫기
             $(window).click(function (event) {
                 if (event.target.id === "passwordModal") {
                     $("#passwordModal").css("display", "none");
+                }
+            });
+
+            // delete
+            $("#deleteModalBtn").click(function () {
+                $("#deleteModal").css("display", "block");
+            });
+
+            // 모달 창 닫기
+            $(".close").click(function () {
+                $("#deleteModal").css("display", "none");
+            });
+
+            // 비밀번호 확인 버튼 클릭 이벤트
+            $(".deleteConfirmBtn").click(function () {
+                const passwordInput = $("#deletePasswordInput").val();
+                // 받아올 데이터 "1" 부분에 입력
+                if (passwordInput.trim() === "") {
+                    alert("비밀번호를 입력해주세요.");
+                } else {
+                    $("#deleteModal").css("display", "none");
+                    onDelete($("#bbsId").val(), passwordInput);
+                }
+            });
+
+            // 모달 창 바깥 클릭 시 닫기
+            $(window).click(function (event) {
+                if (event.target.id === "deleteModal") {
+                    $("#deleteModal").css("display", "none");
                 }
             });
         });

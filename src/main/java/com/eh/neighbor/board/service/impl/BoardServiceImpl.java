@@ -28,6 +28,23 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
+	public List<BoardVO> prevPage(BoardVO boardVO) {
+		return boardMapper.prevPage(boardVO);
+	}
+	@Override
+	public List<BoardVO> currPage(BoardVO boardVO) {
+		return boardMapper.currPage(boardVO);
+	}
+	@Override
+	public List<BoardVO> pageSize(BoardVO boardVO) {
+		return boardMapper.pageSize(boardVO);
+	}
+	@Override
+	public List<BoardVO> prevPage(BoardVO boardVO) {
+		return boardMapper.prevPage(boardVO);
+	}
+	
+	@Override
 	public int searchCount(BoardVO boardVO) {
 		return boardMapper.searchCount(boardVO);
 	}

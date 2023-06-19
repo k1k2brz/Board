@@ -45,6 +45,14 @@
 		</if>
 		order by bbs_id desc
 	</select>
+	
+	<select id="pagination"
+		parameterType="com.eh.neighbor.board.service.vo.BoardVO"
+		resultType="com.eh.neighbor.board.service.vo.BoardVO">
+		SELECT
+		
+		FROM tb_bbs
+	</select>
 
 	<select id="searchCount"
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO"
@@ -107,14 +115,14 @@
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO">
 		update tb_bbs set bbs_sj=#{bbsSj}, updusr=#{wrter},
 		bbs_cn=#{bbsCn}, updt_dt=now()
-		where bbs_id=#{bbsId}
+		where bbs_id=#{bbsId} and password=#{password}
 	</update>
 
 
 
 	<delete id="deleteBoard"
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO">
-		delete from tb_bbs where bbs_id=#{bbsId}
+		delete from tb_bbs where bbs_id=#{bbsId} and password=#{password}
 	</delete>
 
 </mapper> 
