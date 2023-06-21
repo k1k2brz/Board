@@ -48,28 +48,20 @@ public class BoardVO implements Serializable {
 	private String searchDateL;
 	private String searchDateR;
 	
-	// 페이지네이션
-	private int prevPage; // 이전 페이지
-	private int currPage; // 현재 페이지
-	private int nextPage; // 다음 페이지
-	
-	private int pageCount; // 페이지당 게시글 수
-	private int pageSize; // 페이지 이동 넘버링의 사이즈
-	private int totalPageCount; // 전체 게시글 수
-	private int currPageSize; // 현재 페이지 넘버링의 구간
-	
-	private int firstPage; // 첫 페이지
-	private int lastPage; // 마지막 페이지
+	// 현재 페이지
+	private int currPage;
+	private int pageCount;
+	private int currPageCount;
 	
 	
 	// Getter Setter
-	
-	public int getNextPage() {
-		return nextPage;
+
+	public int getCurrPageCount() {
+		return currPageCount;
 	}
 
-	public void setNextPage(int nextPage) {
-		this.nextPage = nextPage;
+	public void setCurrPageCount(int currPageCount) {
+		this.currPageCount = currPageCount;
 	}
 
 	public int getPageCount() {
@@ -80,61 +72,12 @@ public class BoardVO implements Serializable {
 		this.pageCount = pageCount;
 	}
 
-	public int getTotalPageCount() {
-		return totalPageCount;
-	}
-
-	public void setTotalPageCount(int totalPageCount) {
-		this.totalPageCount = totalPageCount;
-	}
-
-	public int getCurrPageSize() {
-		return currPageSize;
-	}
-
-	public void setCurrPageSize(int currPageSize) {
-		this.currPageSize = currPageSize;
-	}
-	
-
-	public int getPrevPage() {
-		return prevPage;
-	}
-
-	public void setPrevPage(int prevPage) {
-		this.prevPage = prevPage;
-	}
-
 	public int getCurrPage() {
 		return currPage;
 	}
 
 	public void setCurrPage(int currPage) {
 		this.currPage = currPage;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = (int)Math.ceil(totalPageCount/pageSize);
-	}
-
-	public int getFirstPage() {
-		return firstPage;
-	}
-
-	public void setFirstPage(int firstPage) {
-		this.firstPage = firstPage;
-	}
-
-	public int getLastPage() {
-		return lastPage;
-	}
-
-	public void setLastPage(int lastPage) {
-		this.lastPage = lastPage;
 	}
 
 	public String getSearchDateL() {

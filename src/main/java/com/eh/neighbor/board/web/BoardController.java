@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eh.neighbor.board.service.BoardService;
 import com.eh.neighbor.board.service.vo.BoardVO;
+import com.eh.neighbor.board.util.Pagination;
 
 @Controller
 public class BoardController {
@@ -25,15 +26,23 @@ public class BoardController {
 
 	@RequestMapping("/")
 	public String boardView(BoardVO boardVO, ModelMap model) throws Exception {
+		
 		List<BoardVO> selectBoard = boardService.selectBoard(boardVO);
 		int searchCount = boardService.searchCount(boardVO);
 		
-//		pagination pagination = new Pagination(현재 페이지 번호, 전체 게시글 수);
+		Integer currPage = boardVO.getCurrPage();
+		
+		if (currPage < 2 || currPage == null) {
+			currPage = 1;
+		}
+		
+		
+		Pagination pagination = new Pagination(currPage, searchCount);
 
 		model.addAttribute("selectBoard", selectBoard);
 		model.addAttribute("searchBoard", boardVO);
 		model.addAttribute("searchCount", searchCount);
-//		model.addAttribute("pagination", pagination);
+		model.addAttribute("pagination", pagination);
 
 		return "/board/BoardList";
 	}

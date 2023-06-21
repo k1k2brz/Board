@@ -112,15 +112,11 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         </div>
                     </div>
                     <div class="board_page">
-                        <button class="board_page_button" type="button">
-                            <span class="board_page_num">1</span>
-                        </button>
-                        <button class="board_page_button" type="button">
-                            <span class="board_page_num">2</span>
-                        </button>
-                        <button class="board_page_button" type="button">
-                            <span class="board_page_num">3</span>
-                        </button>
+                        <c:forEach var="page" items="${selectBoard}" varStatus="status">
+                            <button class="board_page_button" type="button">
+                                <span class="board_page_num"><c:out value="${page.pageSize}" /></span>
+                            </button>
+                        </c:forEach>
                     </div>
                 </form>
             </section>
