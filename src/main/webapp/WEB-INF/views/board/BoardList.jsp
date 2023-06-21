@@ -52,7 +52,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         <c:forEach var="board" items="${selectBoard}" varStatus="status">
                             <article class="board_context_wrapper">
                                 <ul class="board_context">
-                                    <li class="board_context_number"><c:out value="${board.rownum}" /></li>
+                                    <li class="board_context_number"><c:out value="${board.rn}" /></li>
                                     <li class="board_context_title">
                                         <button
                                             class="board_context_button"

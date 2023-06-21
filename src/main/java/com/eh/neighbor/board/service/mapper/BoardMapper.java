@@ -16,12 +16,6 @@ public interface BoardMapper {
 	public BoardVO selectNext(BoardVO boardVO);
 	public void countBoard(BoardVO boardVO);
 	
-	public List<BoardVO> prevPage(BoardVO boardVO);
-	public List<BoardVO> currPage(BoardVO boardVO);
-	public List<BoardVO> pageSize(BoardVO boardVO);
-	public List<BoardVO> firstPage(BoardVO boardVO);
-	public List<BoardVO> lastPage(BoardVO boardVO);
-	
 	public void updateBoard(BoardVO boardVO);
 	public void deleteBoard(BoardVO boardVO);
 }

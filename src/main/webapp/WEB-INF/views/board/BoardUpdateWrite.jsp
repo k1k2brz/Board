@@ -52,7 +52,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                                 class="default_button write_buttons_gray"
                                 type="button"
                                 value="수정취소"
-                                onclick='onDeleteCancel(<c:out value="${selectUpdate.bbsId}" />)'
+                                onclick='onUpdateCancel(<c:out value="${selectUpdate.bbsId}" />)'
                             />
                         </div>
                     </form>
@@ -86,9 +86,9 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                 data: formData,
                 success: function (data, status) {
                     console.log(data.resultFlag, data, status);
-                    if (data.resultFlag === "1") {
+                    if (data.success === "success") {
                         alert(status);
-                        onDeleteCancel($("#bbsId").val())
+                        onUpdateCancel($("#bbsId").val())
                     } else {
                         alert("ERROR Message : Not " + status);
                     }
@@ -102,7 +102,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
         });
 
 
-        function onDeleteCancel(id) {
+        function onUpdateCancel(id) {
             const form = $("#frm")[0];
             $("#bbsId").val(id);
             form.action = "/update";

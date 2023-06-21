@@ -10,9 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.eh.neighbor.board.service.BoardService;
 import com.eh.neighbor.board.service.vo.BoardVO;
@@ -29,10 +27,13 @@ public class BoardController {
 	public String boardView(BoardVO boardVO, ModelMap model) throws Exception {
 		List<BoardVO> selectBoard = boardService.selectBoard(boardVO);
 		int searchCount = boardService.searchCount(boardVO);
+		
+//		pagination pagination = new Pagination(현재 페이지 번호, 전체 게시글 수);
 
 		model.addAttribute("selectBoard", selectBoard);
 		model.addAttribute("searchBoard", boardVO);
 		model.addAttribute("searchCount", searchCount);
+//		model.addAttribute("pagination", pagination);
 
 		return "/board/BoardList";
 	}

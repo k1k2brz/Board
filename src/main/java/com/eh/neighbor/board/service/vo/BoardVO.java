@@ -33,7 +33,7 @@ public class BoardVO implements Serializable {
 	private String updusr;
 
 	// rownum
-	private int rownum;
+	private int rn;
 
 	// 검색어
 	private String searchWriter;
@@ -49,14 +49,52 @@ public class BoardVO implements Serializable {
 	private String searchDateR;
 	
 	// 페이지네이션
-	private int prevPage;
-	private int currPage;
-	private int pageSize;
-	private int firstPage;
-	private int lastPage;
+	private int prevPage; // 이전 페이지
+	private int currPage; // 현재 페이지
+	private int nextPage; // 다음 페이지
+	
+	private int pageCount; // 페이지당 게시글 수
+	private int pageSize; // 페이지 이동 넘버링의 사이즈
+	private int totalPageCount; // 전체 게시글 수
+	private int currPageSize; // 현재 페이지 넘버링의 구간
+	
+	private int firstPage; // 첫 페이지
+	private int lastPage; // 마지막 페이지
 	
 	
 	// Getter Setter
+	
+	public int getNextPage() {
+		return nextPage;
+	}
+
+	public void setNextPage(int nextPage) {
+		this.nextPage = nextPage;
+	}
+
+	public int getPageCount() {
+		return pageCount;
+	}
+
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	public int getTotalPageCount() {
+		return totalPageCount;
+	}
+
+	public void setTotalPageCount(int totalPageCount) {
+		this.totalPageCount = totalPageCount;
+	}
+
+	public int getCurrPageSize() {
+		return currPageSize;
+	}
+
+	public void setCurrPageSize(int currPageSize) {
+		this.currPageSize = currPageSize;
+	}
 	
 
 	public int getPrevPage() {
@@ -80,7 +118,7 @@ public class BoardVO implements Serializable {
 	}
 
 	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
+		this.pageSize = (int)Math.ceil(totalPageCount/pageSize);
 	}
 
 	public int getFirstPage() {
@@ -139,12 +177,12 @@ public class BoardVO implements Serializable {
 		this.searchWriter = searchWriter;
 	}
 
-	public int getRownum() {
-		return rownum;
+	public int getRn() {
+		return rn;
 	}
 
-	public void setRownum(int rownum) {
-		this.rownum = rownum;
+	public void setRn(int rn) {
+		this.rn = rn;
 	}
 
 	public int getBbsId() {
