@@ -18,7 +18,6 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public void writeBoard(BoardVO boardVO) {
-		System.out.print("VO ============>"+boardVO);
 		boardMapper.writeBoard(boardVO);
 	}
 	

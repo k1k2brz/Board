@@ -61,7 +61,7 @@ public class BoardVO implements Serializable {
 	}
 
 	public void setCurrPageCount(int currPageCount) {
-		this.currPageCount = currPageCount;
+		this.currPageCount = (currPage-1) * pageCount;
 	}
 
 	public int getPageCount() {

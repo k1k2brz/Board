@@ -203,6 +203,14 @@
     color: white;
 }
 
+.board_page_button.curr {
+    padding: 12px 15px;
+    border-radius: 7px;
+    background-color: cadetblue;
+    color: white;
+    pointer-events : none;
+}
+
 /* 게시글 작성 페이지 */
 
 /* 게시글 작성 Contens (main) */

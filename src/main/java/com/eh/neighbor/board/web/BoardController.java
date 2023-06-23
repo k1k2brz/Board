@@ -27,22 +27,28 @@ public class BoardController {
 	@RequestMapping("/")
 	public String boardView(BoardVO boardVO, ModelMap model) throws Exception {
 		
-		List<BoardVO> selectBoard = boardService.selectBoard(boardVO);
-		int searchCount = boardService.searchCount(boardVO);
-		
 		Integer currPage = boardVO.getCurrPage();
+		Integer pageCount = boardVO.getPageCount();
 		
 		if (currPage < 2 || currPage == null) {
-			currPage = 1;
+			boardVO.setCurrPage(1);
 		}
 		
+		if (pageCount == 0 || pageCount == null) {
+			boardVO.setPageCount(5);
+		}
+		
+		boardVO.setCurrPageCount(currPage);
+		
+		List<BoardVO> selectBoard = boardService.selectBoard(boardVO);
+		int searchCount = boardService.searchCount(boardVO);
 		
 		Pagination pagination = new Pagination(currPage, searchCount);
 
 		model.addAttribute("selectBoard", selectBoard);
+		model.addAttribute("pagination", pagination);
 		model.addAttribute("searchBoard", boardVO);
 		model.addAttribute("searchCount", searchCount);
-		model.addAttribute("pagination", pagination);
 
 		return "/board/BoardList";
 	}

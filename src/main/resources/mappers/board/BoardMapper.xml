@@ -16,11 +16,10 @@
 	<select id="selectBoard"
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO"
 		resultType="com.eh.neighbor.board.service.vo.BoardVO">
-		SELECT * FROM (
 		SELECT row_number() over(order by bbs_id) as rn,
 		bbs_id, bbs_sj, wrter, bbs_cn, writng_dt, updt_dt, rdcnt, updusr
 		FROM tb_bbs
-		) AS subquery
+		where 1=1
 		<if test="searchWriter != null and searchWriter != ''">
 			<if test="searchSelect == 'writer'">
 				and wrter like concat ('%', #{searchWriter}, '%')
@@ -43,7 +42,7 @@
 			#{searchDateR}::date
 		</if>
 		order by bbs_id desc
-		limit 5 offset 0;
+		limit #{pageCount} offset #{currPageCount}
 	</select>
 
 	<select id="searchCount"

@@ -6,7 +6,7 @@ public class Pagination {
 	private int currPage; // 현재 페이지
 	private int nextPage; // 다음 페이지
 
-	private int pageCount = 5; // 페이지당 게시글 수
+	private int pageCount; // 페이지당 게시글 수
 	private int pageSize; // 페이지 이동 넘버링의 사이즈
 	private int totalPageCount; // 전체 게시글 수
 	private int currPageSize; // 현재 페이지 넘버링의 구간(페이지 그룹)
@@ -38,7 +38,7 @@ public class Pagination {
 	}
 
 	public void setCurrPageCount(int currPageCount) {
-		this.currPageCount = (int) Math.ceil((currPage-1)/(double)pageCount);
+		this.currPageCount = ((currPage-1) * pageCount);
 	}
 	
 	public int getNextPage() {
@@ -54,7 +54,11 @@ public class Pagination {
 	}
 
 	public void setPageCount(int pageCount) {
-		this.pageCount = pageCount;
+		if (pageCount == 0) {
+			this.pageCount = 5;
+		} else {
+			this.pageCount = pageCount;
+		}
 	}
 
 	public int getTotalPageCount() {
@@ -94,7 +98,7 @@ public class Pagination {
 	}
 
 	public void setPageSize(int pageSize) {
-		this.pageSize = (int)Math.ceil(totalPageCount/(double)pageCount);
+		this.pageSize = (int) Math.ceil((double)totalPageCount / pageCount);
 	}
 
 	public int getFirstPage() {
@@ -110,6 +114,12 @@ public class Pagination {
 	}
 
 	public void setLastPage(int lastPage) {
-		this.lastPage = currPageSize+1 * pageCount;
+		int last = currPageSize+1 * pageCount;
+		if (last > pageSize) {
+			this.lastPage = pageSize;
+		} else {
+			this.lastPage = last;
+		}
+		
 	}
 }

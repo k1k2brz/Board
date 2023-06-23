@@ -32,10 +32,10 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                 <form id="frm" name="frm" method="post">
                     <div style="justify-content: space-between; margin-top: 10px" class="board_search-select">
                         <div>조회결과: <c:out value="${searchCount}" /></div>
-                        <select name="board_search-select">
-                            <option value="five">5개</option>
-                            <option value="ten">10개</option>
-                            <option value="twenty">20개</option>
+                        <select id="pageCount" name="pageCount" >
+                            <option value="5">5개</option>
+                            <option value="10">10개</option>
+                            <option value="20">20개</option>
                         </select>
                     </div>
                     <hr class="article_hr" />
@@ -112,12 +112,22 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         </div>
                     </div>
                     <div class="board_page">
-                        <c:forEach var="page" items="${selectBoard}" varStatus="status">
-                            <button class="board_page_button" type="button">
-                                <span class="board_page_num"><c:out value="${page.pageSize}" /></span>
-                            </button>
+                        <c:forEach var="page" begin="${pagination.firstPage}" end="${pagination.lastPage}" step="1" varStatus="status">
+                            <c:choose>
+                                <c:when test="${page eq pagination.currPage}">
+                                    <button class="board_page_button curr" type="button" onClick='onPageNumber(<c:out value="${page}" />)'>
+                                        <span class="board_page_num"><c:out value="${page}" /></span>
+                                    </button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button class="board_page_button" type="button" onClick='onPageNumber(<c:out value="${page}" />)'>
+                                        <span class="board_page_num"><c:out value="${page}" /></span>
+                                    </button>
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
                     </div>
+                    <input type="hidden" id="currPage" name="currPage" />
                 </form>
             </section>
         </div>
@@ -150,6 +160,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                 searchInput.focus();
                 return;
             }
+            $("#currPage").val(1);
             userId.val(0);
             form.action = "/";
             form.submit();
@@ -158,7 +169,19 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
         // 게시글 클릭
         function onUpdate(id) {
             userId.val(id);
+            $("#currPage").val(0);
             form.action = "/update";
+            form.submit();
+        }
+
+        // 페이지네이션
+        function onPageNumber(page) {
+            $("#pageCount").val()
+            console.log(page)
+            $("#currPage").val(page);
+            console.log($("#currPage").val(page))
+            userId.val(0);
+            form.action = "/";
             form.submit();
         }
 
@@ -198,7 +221,6 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                     // alert(day)
                 }
             });
-                
         });
     </script>
 </html>
