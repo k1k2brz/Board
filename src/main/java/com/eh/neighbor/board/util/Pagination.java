@@ -17,11 +17,11 @@ public class Pagination {
 
 	// Getter Setter
 
-	public Pagination(int currentPage, int total) {
+	public Pagination(int currentPage, int total, int pageCnt) {
 
 		setTotalPageCount(total);
 		setCurrPage(currentPage);
-		setPageCount(pageCount);
+		setPageCount(pageCnt);
 		setPageSize(pageSize);
 		
 		setNextPage(nextPage);
@@ -54,12 +54,9 @@ public class Pagination {
 	}
 
 	public void setPageCount(int pageCount) {
-		if (pageCount == 0) {
-			this.pageCount = 5;
-		} else {
-			this.pageCount = pageCount;
-		}
+		this.pageCount = pageCount;
 	}
+	
 
 	public int getTotalPageCount() {
 		return totalPageCount;

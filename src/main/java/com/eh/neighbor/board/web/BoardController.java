@@ -32,6 +32,7 @@ public class BoardController {
 		
 		if (currPage < 2 || currPage == null) {
 			boardVO.setCurrPage(1);
+			currPage = 1;
 		}
 		
 		if (pageCount == 0 || pageCount == null) {
@@ -43,7 +44,7 @@ public class BoardController {
 		List<BoardVO> selectBoard = boardService.selectBoard(boardVO);
 		int searchCount = boardService.searchCount(boardVO);
 		
-		Pagination pagination = new Pagination(currPage, searchCount);
+		Pagination pagination = new Pagination(boardVO.getCurrPage(), searchCount, boardVO.getPageCount());
 
 		model.addAttribute("selectBoard", selectBoard);
 		model.addAttribute("pagination", pagination);

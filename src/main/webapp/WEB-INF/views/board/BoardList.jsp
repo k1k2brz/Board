@@ -32,10 +32,10 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                 <form id="frm" name="frm" method="post">
                     <div style="justify-content: space-between; margin-top: 10px" class="board_search-select">
                         <div>조회결과: <c:out value="${searchCount}" /></div>
-                        <select id="pageCount" name="pageCount" >
-                            <option value="5">5개</option>
-                            <option value="10">10개</option>
-                            <option value="20">20개</option>
+                        <select id="pageCount" name="pageCount" onchange="onChangePageCount()">
+                            <option value="5" <c:if test="${pagination.pageCount == 5}" >selected</c:if>>5개</option>
+                            <option value="10" <c:if test="${pagination.pageCount == 10}" >selected</c:if>>10개</option>
+                            <option value="20" <c:if test="${pagination.pageCount == 20}" >selected</c:if>>20개</option>
                         </select>
                     </div>
                     <hr class="article_hr" />
@@ -112,6 +112,8 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         </div>
                     </div>
                     <div class="board_page">
+                        <button class="board_page_prev" type="button" onClick='onPageMove(1)' <c:if test="${pagination.currPage <= 1}">disabled</c:if>>맨 앞</button>
+                        <button class="board_page_prev" type="button" onClick='onPageMove(<c:out value="${pagination.prevPage}" />)' <c:if test="${pagination.currPage <= 1}">disabled</c:if>>Prev</button>
                         <c:forEach var="page" begin="${pagination.firstPage}" end="${pagination.lastPage}" step="1" varStatus="status">
                             <c:choose>
                                 <c:when test="${page eq pagination.currPage}">
@@ -126,6 +128,8 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
+                        <button class="board_page_prev" type="button" onClick='onPageMove(<c:out value="${pagination.nextPage}" />)' <c:if test="${pagination.currPage >= pagination.lastPage}">disabled</c:if>>Next</button>
+                        <button class="board_page_prev" type="button" onClick='onPageMove(<c:out value="${pagination.pageSize}" />)' <c:if test="${pagination.currPage >= pagination.pageSize}">disabled</c:if>>맨 뒤</button>
                     </div>
                     <input type="hidden" id="currPage" name="currPage" />
                 </form>
@@ -133,8 +137,6 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
         </div>
     </body>
     <script>
-        // 비밀번호 등록 후 수정, 삭제시 Modal로 비밀번호 확인 후 페이지 이동
-        
         // Focus가 처음 Load될 때만 잡히게 하기
         const userId = $("#bbsId");
         const form = $("#frm")[0];
@@ -166,6 +168,15 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             form.submit();
         }
 
+        // Page 출력 개수
+        function onChangePageCount() {
+            $("#pageCount").val();
+            $("#currPage").val(0);
+            userId.val(0);
+            form.action = "/";
+            form.submit();
+        }
+
         // 게시글 클릭
         function onUpdate(id) {
             userId.val(id);
@@ -177,9 +188,16 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
         // 페이지네이션
         function onPageNumber(page) {
             $("#pageCount").val()
-            console.log(page)
             $("#currPage").val(page);
-            console.log($("#currPage").val(page))
+            userId.val(0);
+            form.action = "/";
+            form.submit();
+        }
+
+        // Prev, Next
+        function onPageMove(page) {
+            $("#pageCount").val()
+            $("#currPage").val(page);
             userId.val(0);
             form.action = "/";
             form.submit();

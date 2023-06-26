@@ -195,7 +195,6 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                 success: function (response) {
                     if (response.success) {
                         alert(response.message);
-                        console.log(response);
                         location.href = "/";
                     } else {
                         console.error(response.message);
@@ -204,7 +203,6 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                 },
                 error: function (xhr, error) {
                     console.log("res : " + xhr);
-                    console.log("e : " + error);
                     alert("ERROR, 삭제할 수 없습니다.");
                 },
             });
