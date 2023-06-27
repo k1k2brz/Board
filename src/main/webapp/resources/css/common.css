@@ -7,6 +7,8 @@
     justify-content: center;
     align-items: center;
     margin: auto;
+    margin-top: 80px;
+    margin-bottom: 30px;
     max-width: 90%;
 }
 
@@ -141,8 +143,7 @@
 }
 
 .board_context_container {
-    max-height: 55vh;
-    overflow: auto;
+    
 }
 
 .board_context_wrapper {
@@ -209,6 +210,11 @@
     background-color: cadetblue;
     color: white;
     pointer-events : none;
+}
+
+.bi-icon>div {
+    margin: 0 10;
+    cursor: pointer;
 }
 
 /* 게시글 작성 페이지 */

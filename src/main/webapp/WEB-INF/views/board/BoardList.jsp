@@ -11,6 +11,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         ></script>
+        <script src="https://example.com/fontawesome/v6.4.0/js/fontawesome.js" data-auto-replace-svg="nest"></script>
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"
@@ -112,8 +113,21 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         </div>
                     </div>
                     <div class="board_page">
-                        <button class="board_page_prev" type="button" onClick='onPageMove(1)' <c:if test="${pagination.currPage <= 1}">disabled</c:if>>맨 앞</button>
-                        <button class="board_page_prev" type="button" onClick='onPageMove(<c:out value="${pagination.prevPage}" />)' <c:if test="${pagination.currPage <= 1}">disabled</c:if>>Prev</button>
+                        <button class="board_page_prev bi-icon" type="button" onClick='onPageMove(1)' <c:if test="${pagination.currPage <= 1}">disabled</c:if>>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 256 512">
+                                    <path d="M9.4 278.6c-12.5-12.5-12.5-32.8 0-45.3l128-128c9.2-9.2 22.9-11.9 34.9-6.9s19.8 16.6 19.8 29.6l0 256c0 12.9-7.8 24.6-19.8 29.6s-25.7 2.2-34.9-6.9l-128-128z"/>
+                                </svg>
+                            </div>
+                        </button>
+                        <button class="board_page_prev bi-icon" type="button" onClick='onPageMove(<c:out value="${pagination.prevPage}" />)' <c:if test="${pagination.currPage <= 1}">disabled</c:if>>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">    
+                                    <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                    <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
+                                </svg>
+                            </div>
+                        </button>
                         <c:forEach var="page" begin="${pagination.firstPage}" end="${pagination.lastPage}" step="1" varStatus="status">
                             <c:choose>
                                 <c:when test="${page eq pagination.currPage}">
@@ -128,8 +142,20 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
-                        <button class="board_page_prev" type="button" onClick='onPageMove(<c:out value="${pagination.nextPage}" />)' <c:if test="${pagination.currPage >= pagination.lastPage}">disabled</c:if>>Next</button>
-                        <button class="board_page_prev" type="button" onClick='onPageMove(<c:out value="${pagination.pageSize}" />)' <c:if test="${pagination.currPage >= pagination.pageSize}">disabled</c:if>>맨 뒤</button>
+                        <button class="board_page_prev bi-icon" type="button" onClick='onPageMove(<c:out value="${pagination.nextPage}" />)' <c:if test="${pagination.currPage >= pagination.lastPage}">disabled</c:if>>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                                    <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
+                                </svg>
+                            </div>
+                        </button>
+                        <button class="board_page_prev bi-icon" type="button" onClick='onPageMove(<c:out value="${pagination.pageSize}" />)' <c:if test="${pagination.currPage >= pagination.pageSize}">disabled</c:if>>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 256 512">
+                                    <path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/>
+                                </svg>
+                            </div>
+                        </button>
                     </div>
                     <input type="hidden" id="currPage" name="currPage" />
                 </form>
