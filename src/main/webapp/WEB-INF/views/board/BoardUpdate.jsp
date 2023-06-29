@@ -77,6 +77,28 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                             </div>
                         </div>
                         <hr />
+                        <div class="write_comment">
+                            <div class="comment_input">
+                                <input id="comment" name="comment" type="text" placeholder="댓글을 입력해주세요." />
+                                <input class="cmt_button" type="button" value="댓글쓰기" />
+                            </div>
+                            <div class="comment_result"></div>
+                        </div>
+                        <hr />
+                        <div class="comment-box">
+                            <div class="header">
+                                <span class="author">John Doe</span>
+                                <span class="timestamp">June 30, 2023</span>
+                            </div>
+                            <div class="content">
+                                <p>This is a comment. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            </div>
+                            <div class="actions">
+                                <button class="update button">수정</button>
+                                <button class="delete button">삭제</button>
+                              </div>
+                        </div>
+                        <hr />
                         <div class="write_buttons">
                             <input
                                 id="updateModalBtn"
@@ -113,7 +135,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         class="passwordInput"
                         placeholder="비밀번호를 입력하세요"
                     />
-                    <button id="confirmBtn">확인</button>
+                    <button id="confirmBtn" class="updateConfirmBtn default_modal_button">확인</button>
                 </div>
             </div>
         </div>
@@ -129,7 +151,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         class="passwordInput"
                         placeholder="비밀번호를 입력하세요"
                     />
-                    <button id="confirmBtn" class="deleteConfirmBtn">확인</button>
+                    <button id="confirmBtn" class="deleteConfirmBtn default_modal_button">확인</button>
                 </div>
             </div>
         </div>
@@ -160,7 +182,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                 dataType: "json",
                 processData: true,
                 cache: false,
-                data: { bbsId: Number($("#bbsId").val()), password},
+                data: { bbsId: Number($("#bbsId").val()), password },
                 success: function (response) {
                     if (response.success) {
                         alert(response.message);
@@ -217,16 +239,15 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             // 모달 창 닫기
             $(".close").click(function () {
                 $("#passwordModal").css("display", "none");
+                $("#passwordInput").val('');
             });
 
             // 비밀번호 확인 버튼 클릭 이벤트
-            $("#confirmBtn").click(function () {
+            $(".updateConfirmBtn").click(function () {
                 const passwordInput = $("#passwordInput").val();
-                // 받아올 데이터 "1" 부분에 입력
                 if (passwordInput.trim() === "") {
                     alert("비밀번호를 입력해주세요.");
                 } else {
-                    // alert("Success");
                     $("#passwordModal").css("display", "none");
                     onUpdateWrite(passwordInput);
                 }
@@ -236,6 +257,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             $(window).click(function (event) {
                 if (event.target.id === "passwordModal") {
                     $("#passwordModal").css("display", "none");
+                    $("#passwordInput").val('');
                 }
             });
 
@@ -247,6 +269,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             // 모달 창 닫기
             $(".close").click(function () {
                 $("#deleteModal").css("display", "none");
+                $("#deletePasswordInput").val('');
             });
 
             // 비밀번호 확인 버튼 클릭 이벤트
@@ -265,6 +288,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             $(window).click(function (event) {
                 if (event.target.id === "deleteModal") {
                     $("#deleteModal").css("display", "none");
+                    $("#deletePasswordInput").val('');
                 }
             });
         });

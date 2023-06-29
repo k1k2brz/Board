@@ -3,13 +3,15 @@ package com.eh.neighbor.board.service;
 import java.util.List;
 
 import com.eh.neighbor.board.service.vo.BoardVO;
+import com.eh.neighbor.board.service.vo.CommentVO;
 
 
 public interface BoardService  {
 	
 	// Create
 	void writeBoard(BoardVO boardVO);
-	
+	void writeComment(CommentVO commentVO);
+
 	// Read
 	List<BoardVO> selectBoard(BoardVO boardVO);
 	int searchCount(BoardVO boardVO);

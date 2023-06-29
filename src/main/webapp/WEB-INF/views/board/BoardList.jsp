@@ -75,9 +75,9 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         <div class="board_search-container">
                             <div class="board_search-select">
                                 <select id="board_search-select" name="searchSelect">
-                                    <option value="writer" <c:if test="${searchSelect == 'searchBoard.writer'}">selected</c:if>>작성자</option>
-                                    <option value="title" <c:if test="${searchSelect == 'searchBoard.title'}">selected</c:if>>제목</option>
-                                    <option value="content" <c:if test="${searchSelect == 'searchBoard.content'}">selected</c:if>>내용</option>
+                                    <option value="writer" <c:if test="${searchBoard.searchSelect == 'writer'}">selected</c:if>>작성자</option>
+                                    <option value="title" <c:if test="${searchBoard.searchSelect == 'title'}">selected</c:if>>제목</option>
+                                    <option value="content" <c:if test="${searchBoard.searchSelect == 'content'}">selected</c:if>>내용</option>
                                 </select>
                                 <input
                                     class="board_search-input"
@@ -266,5 +266,8 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                 }
             });
         });
+
+        $(".datepicker").datepicker(); 
+
     </script>
 </html>

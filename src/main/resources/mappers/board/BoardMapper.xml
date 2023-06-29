@@ -33,13 +33,13 @@
 		</if>
 		<if
 			test="searchDateL != null and searchDateL != '' and searchDateR != null and searchDateR != ''">
-			and writng_dt::date between #{searchDateL}::timestamp and
-			#{searchDateR}::date
+			and writng_dt between #{searchDateL}::timestamp and
+			concat(#{searchDateR}::date, ' ', '23:59:59')::timestamp
 		</if>
 		<if
 			test="searchDateL != null and searchDateL != '' and searchDateR != null and searchDateR != ''">
-			and writng_dt::date between #{searchDateL}::timestamp and
-			#{searchDateR}::date
+			and writng_dt between #{searchDateL}::timestamp and
+			concat(#{searchDateR}::date, ' ', '23:59:59')::timestamp
 		</if>
 		order by bbs_id desc
 		limit #{pageCount} offset #{currPageCount}
