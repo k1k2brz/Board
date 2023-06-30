@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.eh.neighbor.board.service.BoardService;
 import com.eh.neighbor.board.service.mapper.BoardMapper;
 import com.eh.neighbor.board.service.vo.BoardVO;
+import com.eh.neighbor.board.service.vo.CommentVO;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -19,6 +20,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void writeBoard(BoardVO boardVO) {
 		boardMapper.writeBoard(boardVO);
+	}
+	
+	@Override
+	public void writeComment(CommentVO commentVO) {
+		boardMapper.writeComment(commentVO);
 	}
 	
 	@Override

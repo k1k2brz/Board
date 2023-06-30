@@ -79,8 +79,10 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         <hr />
                         <div class="write_comment">
                             <div class="comment_input">
-                                <input id="comment" name="comment" type="text" placeholder="댓글을 입력해주세요." />
-                                <input class="cmt_button" type="button" value="댓글쓰기" />
+                                <input id="answerWrter" class="answerWrter" name="answerWrter" type="text" maxlength="8" placeholder="아이디 입력" />
+                                <input id="answerWrter" class="answerWrter" name="answerWrter" type="text" maxlength="12" placeholder="비밀번호 입력" />
+                                <input id="comment" class="answerCn" name="answerCn" type="text" placeholder="댓글을 입력해주세요." />
+                                <input class="cmt_button" type="button" value="댓글쓰기"/>
                             </div>
                             <div class="comment_result"></div>
                         </div>
@@ -94,9 +96,9 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                                 <p>This is a comment. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
                             <div class="actions">
-                                <button class="update button">수정</button>
-                                <button class="delete button">삭제</button>
-                              </div>
+                                <button class="update button" type="button">수정</button>
+                                <button class="delete button" type="button">삭제</button>
+                            </div>
                         </div>
                         <hr />
                         <div class="write_buttons">
@@ -157,6 +159,42 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
         </div>
     </body>
     <script>
+        // Comment 쓰기 (나중에 아래로 내릴 것)
+        $(function () {
+            $(".cmt_button").click("submit", function() {
+                if ($(".answerCn").val() === "" || $("#answerWrter").val() === "") {
+                    alert("공백은 사용 불가능합니다.");
+                } else {
+                    console.log($("#bbsId").val(), $("#answerWrter").val(), $(".answerCn").val(), )
+                    const body = {
+                        bbsId: $("#bbsId").val(),
+                        answerWrter: $("#answerWrter").val(),
+                        answerCn: $(".answerCn").val(),
+                        password: '0'
+                    }
+                    $.ajax({
+                        url: "/commentAction",
+                        type: "post",
+                        dataType: "json",
+                        processData: true,
+                        cache: false,
+                        data: body,
+                        success: function (data, status) {
+                            if (data.success === "1") {
+                                console.log(data.message)
+                            } else {
+                                alert("ERROR");
+                            }
+                        },
+                        error: function (xhr, error) {
+                            console.error("res : " + xhr);
+                            console.log("e : " + error);
+                        },
+                    });
+                }
+            });
+        });
+
         // row num(Query), 수정자 나오게
         const prevButton = $(".w_prev");
         const nextButton = $(".w_next");
@@ -239,7 +277,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             // 모달 창 닫기
             $(".close").click(function () {
                 $("#passwordModal").css("display", "none");
-                $("#passwordInput").val('');
+                $("#passwordInput").val("");
             });
 
             // 비밀번호 확인 버튼 클릭 이벤트
@@ -257,7 +295,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             $(window).click(function (event) {
                 if (event.target.id === "passwordModal") {
                     $("#passwordModal").css("display", "none");
-                    $("#passwordInput").val('');
+                    $("#passwordInput").val("");
                 }
             });
 
@@ -269,7 +307,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             // 모달 창 닫기
             $(".close").click(function () {
                 $("#deleteModal").css("display", "none");
-                $("#deletePasswordInput").val('');
+                $("#deletePasswordInput").val("");
             });
 
             // 비밀번호 확인 버튼 클릭 이벤트
@@ -288,7 +326,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             $(window).click(function (event) {
                 if (event.target.id === "deleteModal") {
                     $("#deleteModal").css("display", "none");
-                    $("#deletePasswordInput").val('');
+                    $("#deletePasswordInput").val("");
                 }
             });
         });

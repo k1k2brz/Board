@@ -10,6 +10,12 @@
 		insert into tb_bbs (bbs_sj, wrter, bbs_cn, password)
 		values(#{bbsSj}, #{wrter}, #{bbsCn}, #{password})
 	</insert>
+	
+	<insert id="writeComment"
+		parameterType="com.eh.neighbor.board.service.vo.CommentVO">
+		insert into tb_bbs_answer (bbs_id, answer_wrter, answer_cn, password)
+		values(#{bbsId}, #{answerWrter}, #{answerCn}, #{password})
+	</insert>
 
 
 

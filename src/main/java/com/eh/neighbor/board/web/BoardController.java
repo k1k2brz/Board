@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eh.neighbor.board.service.BoardService;
 import com.eh.neighbor.board.service.vo.BoardVO;
+import com.eh.neighbor.board.service.vo.CommentVO;
 import com.eh.neighbor.board.util.Pagination;
 
 @Controller
@@ -94,6 +95,7 @@ public class BoardController {
 
 		return "/board/BoardUpdate";
 	}
+	
 
 	// Update
 
@@ -162,6 +164,27 @@ public class BoardController {
 		boardService.deleteBoard(boardVO);
 
 		try {
+			return map;
+		} catch (Exception e) {
+			map.put("error", e);
+			return map;
+		}
+	}
+	
+	
+	
+	// Comment 관련
+	
+	@ResponseBody
+	@RequestMapping(value = "/commentAction", method = RequestMethod.POST)
+	public Map<String, Object> commentWriteAction(CommentVO commentVO) throws Exception {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		boardService.writeComment(commentVO);
+
+		try {
+			map.put("success", "1");
+			map.put("message", "요청이 성공적으로 처리되었습니다.");
 			return map;
 		} catch (Exception e) {
 			map.put("error", e);
