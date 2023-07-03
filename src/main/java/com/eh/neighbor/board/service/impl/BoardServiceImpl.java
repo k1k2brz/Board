@@ -54,13 +54,33 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
+	public List<CommentVO> selectComment(CommentVO commentVO) {
+		return boardMapper.selectComment(commentVO);
+	}
+	
+	@Override
 	public void updateBoard(BoardVO boardVO) {
 		boardMapper.updateBoard(boardVO);
 	}
 	
 	@Override
+	public CommentVO commentCompare(CommentVO commentVO) {
+		return boardMapper.commentCompare(commentVO);
+	}
+	
+	@Override
+	public CommentVO updateComment(CommentVO commentVO) {
+		return boardMapper.updateComment(commentVO);
+	}
+	
+	@Override
 	public void deleteBoard(BoardVO boardVO) {
 		boardMapper.deleteBoard(boardVO);
+	}
+	
+	@Override
+	public void deleteComment(CommentVO commentVO) {
+		boardMapper.deleteComment(commentVO);
 	}
 
 	@Override

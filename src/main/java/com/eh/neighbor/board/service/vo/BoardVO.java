@@ -53,8 +53,18 @@ public class BoardVO implements Serializable {
 	private int pageCount;
 	private int currPageCount;
 	
+	// comment
+	private CommentVO commentVO;
 	
 	// Getter Setter
+
+	public CommentVO getCommentVO() {
+		return commentVO;
+	}
+
+	public void setCommentVO(CommentVO commentVO) {
+		this.commentVO = commentVO;
+	}
 
 	public int getCurrPageCount() {
 		return currPageCount;

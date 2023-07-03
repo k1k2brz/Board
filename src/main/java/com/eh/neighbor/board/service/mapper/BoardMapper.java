@@ -14,10 +14,15 @@ public interface BoardMapper {
 	public int searchCount(BoardVO boardVO);
 	
 	public BoardVO selectUpdate(BoardVO boardVO);
+	public List<CommentVO> selectComment(CommentVO commentVO);
 	public BoardVO selectPrev(BoardVO boardVO);
 	public BoardVO selectNext(BoardVO boardVO);
 	public void countBoard(BoardVO boardVO);
 	
 	public void updateBoard(BoardVO boardVO);
+	public CommentVO commentCompare(CommentVO commentVO);
+	public CommentVO updateComment(CommentVO commentVO);
+	
 	public void deleteBoard(BoardVO boardVO);
+	public void deleteComment(CommentVO commentVO);
 }

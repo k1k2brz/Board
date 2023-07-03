@@ -83,13 +83,15 @@ public class BoardController {
 	// 게시글 하나씩 보기
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String boardUpdate(BoardVO boardVO, ModelMap model) throws Exception {
+	public String boardUpdate(BoardVO boardVO, CommentVO commentVO, ModelMap model) throws Exception {
 		boardService.countBoard(boardVO);
 		BoardVO selectUpdate = boardService.selectUpdate(boardVO);
 		BoardVO selectPrev = boardService.selectPrev(boardVO);
 		BoardVO selectNext = boardService.selectNext(boardVO);
+		List<CommentVO> selectComment = boardService.selectComment(commentVO);
 
 		model.addAttribute("selectUpdate", selectUpdate);
+		model.addAttribute("selectComment", selectComment);
 		model.addAttribute("selectPrev", selectPrev);
 		model.addAttribute("selectNext", selectNext);
 
@@ -143,6 +145,43 @@ public class BoardController {
 			return map;
 		}
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/commentPasswordCompare", method = RequestMethod.POST)
+	public Map<String, Object> commentPasswordCompare(CommentVO commentVO) throws Exception {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		CommentVO commentCompare = boardService.commentCompare(commentVO);
+
+		if (commentCompare.getPassword().equals(commentVO.getPassword())) {
+			map.put("success", true);
+			map.put("message", "비밀번호가 확인되었습니다.");
+		} else {
+			map.put("success", false);
+			map.put("message", "비밀번호가 올바르지 않습니다.");
+		}
+
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/commentUpdateAction", method = RequestMethod.POST)
+	public Map<String, Object> commentUpdateAction(CommentVO commentVO, ModelMap model) throws Exception {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		boardService.updateComment(commentVO);
+
+		try {
+			map.put("success", "1");
+			map.put("message", "수정요청 성공");
+			return map;
+		} catch (Exception e) {
+			map.put("error", e);
+			return map;
+		}
+	}
 
 	// Delete
 	@ResponseBody
@@ -162,6 +201,32 @@ public class BoardController {
 		}
 
 		boardService.deleteBoard(boardVO);
+
+		try {
+			return map;
+		} catch (Exception e) {
+			map.put("error", e);
+			return map;
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/commentDeleteAction", method = RequestMethod.POST)
+	public Map<String, Object> commentDelete(CommentVO commentVO) throws Exception {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		CommentVO commentCompare = boardService.commentCompare(commentVO);
+
+		if (commentCompare.getPassword().equals(commentVO.getPassword())) {
+			map.put("success", true);
+			map.put("message", "비밀번호가 확인되었습니다.");
+		} else {
+			map.put("success", false);
+			map.put("message", "비밀번호가 올바르지 않습니다.");
+		}
+		
+		boardService.deleteComment(commentVO);
 
 		try {
 			return map;

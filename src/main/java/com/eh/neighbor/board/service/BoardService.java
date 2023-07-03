@@ -17,14 +17,20 @@ public interface BoardService  {
 	int searchCount(BoardVO boardVO);
 	BoardVO selectPrev(BoardVO boardVO);
 	BoardVO selectNext(BoardVO boardVO);
+	
+	BoardVO selectUpdate(BoardVO boardVO);
+	List<CommentVO> selectComment(CommentVO commentVO);
 
 	
 	// Update 
 	void countBoard(BoardVO boardVO);
-	BoardVO selectUpdate(BoardVO boardVO);
 	void updateBoard(BoardVO boardVO);
+	
+	CommentVO commentCompare(CommentVO commentVO);
+	CommentVO updateComment(CommentVO commentVO);
 	
 	// Delete
 	void deleteBoard(BoardVO boardVO);
+	void deleteComment(CommentVO commentVO);
 
 }

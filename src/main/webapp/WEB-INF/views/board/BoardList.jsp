@@ -11,7 +11,6 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         ></script>
-        <script src="https://example.com/fontawesome/v6.4.0/js/fontawesome.js" data-auto-replace-svg="nest"></script>
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"

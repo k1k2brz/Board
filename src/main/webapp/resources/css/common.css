@@ -12,6 +12,13 @@
     max-width: 90%;
 }
 
+.update_container {
+    margin: auto;
+    margin-top: 200px;
+    margin-bottom: 30px;
+    max-width: 90%;
+}
+
 /* HEADER */
 
 .header {
@@ -186,8 +193,7 @@
 
 /* 코멘트 */
 .write_comment {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
 }
 
 .write_comment > .comment_input {
@@ -195,16 +201,26 @@
     flex-direction: row;
 }
 
+.comment_input .column {
+    display: flex;
+    flex-direction: column;
+}
+
 #comment {
     padding: 7px;
     border-radius: 5px;
 }
 
-.answerWrter {
+.answerWrter,
+.password {
     padding: 7px;
     border-radius: 5px;
-    width: 15%;
+    width: 85%;
     margin-right: 5px;
+}
+
+.column .answerWrter {
+    margin-bottom: 5px;
 }
 
 .cmt_button {
@@ -213,7 +229,7 @@
     margin-left: 5px;
     border: none;
     width: 110px;
-    height: 46px;
+    height: 97px;
     color: white;
     border-radius: 7px;
     cursor: pointer;
@@ -224,6 +240,7 @@
     padding: 20px;
     border-radius: 10px;
     background-color: #f0f0f0;
+    margin-bottom: 3px;
 }
 
 .comment-box .header {

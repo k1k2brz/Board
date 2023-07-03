@@ -79,11 +79,52 @@
 	</update>
 
 
+	<!-- <resultMap id="resultMap" type="com.eh.neighbor.board.service.vo.BoardVO">
+	    <id property="bbsId" column="bbs_id" />
+	    <result property="bbsSj" column="bbs_sj" />
+	    <result property="wrter" column="wrter" />
+	    <result property="bbsCn" column="bbs_cn" />
+	    <result property="writngDt" column="writng_dt" />
+	    <result property="updtDt" column="updt_dt" />
+	    <result property="rdcnt" column="rdcnt" />
+	    <result property="updusr" column="updusr" />
+	    
+	    <association column="cmt" property="commentVO" javaType="com.eh.neighbor.board.service.vo.CommentVO">
+	    	<id property="bbsId" column="bbs_id" />
+		    <result property="answerId" column="answer_id" />
+		    <result property="answerWrter" column="answer_wrter" />
+		    <result property="answerCn" column="answer_cn" />
+		    <result property="writngDt" column="writng_dt" />
+		    <result property="updtDt" column="updt_dt" />
+		    <result property="answerUpdusr" column="answer_updusr" />
+	    </association>
+	</resultMap> -->
 
+	<!-- <select id="selectUpdate"
+		resultMap="resultMap">
+		SELECT wrt.bbs_id, wrt.bbs_sj, wrt.wrter, wrt.bbs_cn, wrt.writng_dt, wrt.updt_dt, wrt.rdcnt, wrt.updusr,
+		cmt.answer_id, cmt.answer_wrter, cmt.answer_cn, cmt.writng_dt, cmt.updt_dt, cmt.answer_updusr
+		FROM tb_bbs wrt join tb_bbs_answer cmt
+		on wrt.bbs_id = cmt.bbs_id
+		where wrt.bbs_id=#{bbsId}
+	</select> -->
+	
 	<select id="selectUpdate"
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO"
 		resultType="com.eh.neighbor.board.service.vo.BoardVO">
-		select * from tb_bbs where bbs_id=#{bbsId}
+		SELECT * FROM tb_bbs where bbs_id=#{bbsId}
+	</select>
+	
+	<select id="selectComment"
+		parameterType="com.eh.neighbor.board.service.vo.CommentVO"
+		resultType="com.eh.neighbor.board.service.vo.CommentVO">
+		select * from tb_bbs_answer where bbs_id=#{bbsId}
+	</select>
+	
+	<select id="commentCompare"
+		parameterType="com.eh.neighbor.board.service.vo.CommentVO"
+		resultType="com.eh.neighbor.board.service.vo.CommentVO">
+		select * from tb_bbs_answer where answer_id=#{answerId} and password=#{password}
 	</select>
 
 	<select id="selectPrev"
@@ -115,6 +156,12 @@
 		bbs_cn=#{bbsCn}, updt_dt=now()
 		where bbs_id=#{bbsId}
 	</update>
+	
+	<update id="updateCommentWrite"
+		parameterType="com.eh.neighbor.board.service.vo.CommentVO">
+		update tb_bbs_answer set answer_cn=#{answerCn}, answer_updusr=#{answerWrter}, updt_dt=now()
+		where answer_id=#{answerId}
+	</update>
 
 
 
@@ -124,4 +171,9 @@
 		password=#{password}
 	</delete>
 
+	<delete id="deleteComment"
+		parameterType="com.eh.neighbor.board.service.vo.CommentVO">
+		delete from tb_bbs_answer where answer_id=#{answerId} and
+		password=#{password}
+	</delete>
 </mapper> 
