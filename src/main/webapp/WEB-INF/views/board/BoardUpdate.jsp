@@ -120,32 +120,45 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                                     <span class="timestamp"><c:out value="${comment.writngDt.substring(0,19)}" /></span>
                                 </div>
                                 <div class="content">
-                                    <p class="comment-value"><c:out value="${comment.answerCn}" /></p>
+                                    <p class="comment-value" style="display: block">
+                                        <c:out value="${comment.answerCn}" />
+                                    </p>
+                                    <textarea class="edit-textarea" name="answerCn" style="display: none">
+<c:out value="${comment.answerCn}" /></textarea
+                                    >
                                 </div>
                                 <div class="actions">
                                     <button
-                                        class="update button"
+                                        class="update button edit"
                                         type="button"
+                                        style="display: inline"
                                         onclick="onUpdateCommentModal(<c:out value='${comment.answerId}' />)"
                                     >
                                         수정
                                     </button>
                                     <button
-                                        class="delete button"
+                                        class="update button commit"
                                         type="button"
+                                        style="display: none"
+                                        onclick="onUpdateCommentCommit(<c:out value='${comment.answerId}' />)"
+                                    >
+                                        확인
+                                    </button>
+                                    <button
+                                        class="delete button commit"
+                                        type="button"
+                                        style="display: inline"
                                         onclick="onDeleteCommentModal(<c:out value='${comment.answerId}' />)"
                                     >
                                         삭제
                                     </button>
-                                </div>
-                                <div class="edit-box" style="display: none">
-                                    <textarea class="edit-textarea"></textarea>
                                     <button
-                                        class="save button"
+                                        class="delete button cancel"
                                         type="button"
-                                        onclick="onSaveComment(<c:out value='${comment.answerId}' />)"
+                                        style="display: none"
+                                        onclick="onUpdateCommentCancel(<c:out value='${comment.answerId}' />)"
                                     >
-                                        저장
+                                        취소
                                     </button>
                                 </div>
                             </div>
@@ -187,7 +200,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         class="passwordInput"
                         placeholder="비밀번호를 입력하세요"
                     />
-                    <button id="confirmBtn" class="updateConfirmBtn default_modal_button">확인</button>
+                    <button id="updateConfirmBtn" class="updateConfirmBtn default_modal_button">확인</button>
                 </div>
             </div>
         </div>
@@ -202,7 +215,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         class="passwordInput"
                         placeholder="비밀번호를 입력하세요"
                     />
-                    <button id="confirmBtn" class="cmtUpdateConfirmBtn default_modal_button">확인</button>
+                    <button id="cmtUpdateConfirmBtn" class="cmtUpdateConfirmBtn default_modal_button">확인</button>
                 </div>
             </div>
         </div>
@@ -218,7 +231,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         class="passwordInput"
                         placeholder="비밀번호를 입력하세요"
                     />
-                    <button id="confirmBtn" class="deleteConfirmBtn default_modal_button">확인</button>
+                    <button id="deleteConfirmBtn" class="deleteConfirmBtn default_modal_button">확인</button>
                 </div>
             </div>
         </div>
@@ -233,13 +246,14 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         class="passwordInput"
                         placeholder="비밀번호를 입력하세요"
                     />
-                    <button id="confirmBtn" class="cmtDeleteConfirmBtn default_modal_button">확인</button>
+                    <button id="cmtDeleteConfirmBtn" class="cmtDeleteConfirmBtn default_modal_button">확인</button>
                 </div>
             </div>
         </div>
     </body>
     <script>
         const form = $("#frm")[0];
+        let checked = false;
 
         $(function () {
             $(".cmt_button").click("submit", function () {
@@ -262,18 +276,15 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         data: body,
                         success: function (data, status) {
                             if (data.success === "1") {
-                                console.log(data.message);
                                 $("#bbsId").val();
                                 form.action = "/update";
                                 form.submit();
-                                // $("#answerWrter").val(""), $(".answerCn").val(""), $(".password").val("");
                             } else {
-                                alert("ERROR");
+                                alert("댓글을 작성할 수 없습니다.");
                             }
                         },
                         error: function (xhr, error) {
-                            console.error("res : " + xhr);
-                            console.log("e : " + error);
+                            alert("댓글을 작성할 수 없습니다.");
                         },
                     });
                 }
@@ -308,18 +319,14 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                     if (response.success) {
                         alert(response.message);
                         console.log(response);
-                        // $("#bbsId").val();
                         form.action = "/updateWrite";
                         form.submit();
                     } else {
-                        console.error(response.message);
                         alert("ERROR Message : " + response.message);
                     }
                 },
                 error: function (xhr, error) {
-                    console.error("res : " + xhr);
-                    console.log("e : " + error);
-                    alert("ERROR, 수정할 수 없습니다.");
+                    alert("게시글을 수정할 수 없습니다.");
                 },
             });
         }
@@ -339,13 +346,11 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         alert(response.message);
                         location.href = "/";
                     } else {
-                        console.error(response.message);
                         alert("ERROR Message : " + response.message);
                     }
                 },
                 error: function (xhr, error) {
-                    console.log("res : " + xhr);
-                    alert("ERROR, 삭제할 수 없습니다.");
+                    alert("게시글을 삭제할 수 없습니다.");
                 },
             });
         }
@@ -361,29 +366,90 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                 data: { answerId: id, password },
                 success: function (response) {
                     if (response.success) {
-                        console.log(response);
-                        let commentNum = "#comment-box-"+id+" "+".edit-box"
-                        let content = $("#comment-box-" + id + ".comment-value").val();
-                        let textarea = $("#comment-box-" + id + ".edit-textarea");
-                        console.log(commentNum, content, textarea)
+                        const commentTextarea = "#comment-box-" + id + " " + ".edit-textarea";
+                        const commentContent = "#comment-box-" + id + " " + ".comment-value";
+                        const updateButton = "#comment-box-" + id + " " + ".update.button.edit";
+                        const commitButton = "#comment-box-" + id + " " + ".update.button.commit";
+                        const deleteButton = "#comment-box-" + id + " " + ".delete.button.commit";
+                        const cancelButton = "#comment-box-" + id + " " + ".delete.button.cancel";
 
-                        textarea.val(content);
-                        $(commentNum).css("display", "block")
-                        $("#cmtPasswordInput").val('');
-                        // $("#bbsId").val();
-                        // form.action = "/update";
-                        // form.submit();
+                        $(commentTextarea).attr("id", "edit-active");
+
+                        $(commentTextarea).css("display", "block");
+                        $(commitButton).css("display", "inline");
+                        $(cancelButton).css("display", "inline");
+                        $(deleteButton).css("display", "none");
+                        $(updateButton).css("display", "none");
+                        $(commentContent).css("display", "none");
+                        $("#cmtPasswordInput").val("");
                     } else {
-                        console.error(response.message);
                         alert("ERROR Message : " + response.message);
                     }
                 },
                 error: function (xhr, error) {
-                    console.error("res : " + xhr);
-                    console.log("e : " + error);
-                    alert("ERROR, 수정할 수 없습니다.");
+                    alert("댓글을 수정할 수 없습니다.");
+                    $("#cmtPasswordInput").val("");
                 },
             });
+        }
+
+        function onUpdateCommentCommit(id) {
+            const commentTextarea = "#comment-box-" + id + " " + ".edit-textarea";
+            $.ajax({
+                url: "/commentUpdateAction",
+                type: "post",
+                dataType: "json",
+                processData: true,
+                cache: false,
+                data: { answerId: id, answerCn: $(commentTextarea).val() },
+                success: function (response) {
+                    if (response.success === "1") {
+                        const commentContent = "#comment-box-" + id + " " + ".comment-value";
+                        const updateButton = "#comment-box-" + id + " " + ".update.button.edit";
+                        const commitButton = "#comment-box-" + id + " " + ".update.button.commit";
+                        const deleteButton = "#comment-box-" + id + " " + ".delete.button.commit";
+                        const cancelButton = "#comment-box-" + id + " " + ".delete.button.cancel";
+
+                        $(commentTextarea).removeAttr("id", "edit-active");
+
+                        $(commentTextarea).css("display", "none");
+                        $(commitButton).css("display", "none");
+                        $(cancelButton).css("display", "none");
+                        $(deleteButton).css("display", "inline");
+                        $(updateButton).css("display", "inline");
+                        $(commentContent).css("display", "inline");
+                        $("#cmtPasswordInput").val("");
+                        $("#bbsId").val();
+                        form.action = "/update";
+                        form.submit();
+                    } else {
+                        alert("ERROR Message : " + response);
+                    }
+                },
+                error: function (xhr, error) {
+                    console.error("res : " + xhr);
+                    alert("댓글을 수정할 수 없습니다.");
+                },
+            });
+        }
+
+        function onUpdateCommentCancel(id) {
+            const commentTextarea = "#comment-box-" + id + " " + ".edit-textarea";
+            const commentContent = "#comment-box-" + id + " " + ".comment-value";
+            const updateButton = "#comment-box-" + id + " " + ".update.button.edit";
+            const commitButton = "#comment-box-" + id + " " + ".update.button.commit";
+            const deleteButton = "#comment-box-" + id + " " + ".delete.button.commit";
+            const cancelButton = "#comment-box-" + id + " " + ".delete.button.cancel";
+
+            $(commentTextarea).css("display", "none");
+            $(commitButton).css("display", "none");
+            $(cancelButton).css("display", "none");
+            $(deleteButton).css("display", "inline");
+            $(updateButton).css("display", "inline");
+            $(commentContent).css("display", "inline");
+            $("#cmtPasswordInput").val("");
+
+            $(commentTextarea).removeAttr("id", "edit-active");
         }
 
         function onDeleteComment(id, pw) {
@@ -398,19 +464,18 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                 data: body,
                 success: function (response) {
                     if (response.success) {
-                        console.log(response.message);
                         const form = $("#frm")[0];
                         $("#bbsId").val();
                         form.action = "/update";
                         form.submit();
+                        $("#cmtDeletePasswordInput").val('');
                     } else {
-                        console.error(response.message);
                         alert("ERROR Message : " + response.message);
                     }
                 },
                 error: function (xhr, error) {
-                    console.log("res : " + xhr);
-                    alert("ERROR, 삭제할 수 없습니다.");
+                    alert("댓글을 삭제할 수 없습니다.");
+                    $("#cmtDeletePasswordInput").val('');
                 },
             });
         }
@@ -428,7 +493,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             });
 
             // 비밀번호 확인 버튼 클릭 이벤트
-            $(".updateConfirmBtn").click(function () {
+            $("#updateConfirmBtn").click(function () {
                 const passwordInput = $("#passwordInput").val();
                 if (passwordInput.trim() === "") {
                     alert("비밀번호를 입력해주세요.");
@@ -458,7 +523,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
             });
 
             // 비밀번호 확인 버튼 클릭 이벤트
-            $(".deleteConfirmBtn").click(function () {
+            $("#deleteConfirmBtn").click(function () {
                 const passwordInput = $("#deletePasswordInput").val();
                 // 받아올 데이터 "1" 부분에 입력
                 if (passwordInput.trim() === "") {
@@ -507,48 +572,51 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                     $("#cmtDeletePasswordInput").val("");
                 }
             });
-        });
-
-        function onUpdateCommentModal(id) {
-            $("#cmtPasswordModal").css("display", "block");
 
             // 비밀번호 확인 버튼 클릭 이벤트
-            $(".cmtUpdateConfirmBtn").click(function () {
+            $("#cmtUpdateConfirmBtn").click(function () {
                 const passwordInput = $("#cmtPasswordInput").val();
                 if (passwordInput.trim() === "") {
                     alert("비밀번호를 입력해주세요.");
                 } else {
                     $("#cmtPasswordModal").css("display", "none");
-                    onUpdateComment(id, passwordInput);
+                    onUpdateComment($("#commentNumber").val(), passwordInput);
+                    $("#commentNumber").remove();
                 }
             });
-        }
 
-        function onDeleteCommentModal(id) {
-            $("#cmtDeleteModal").css("display", "block");
-
-            // 비밀번호 확인 버튼 클릭 이벤트
-            $(".cmtDeleteConfirmBtn").click(function () {
+            // 삭제 비밀번호 확인 버튼 클릭 이벤트
+            $("#cmtDeleteConfirmBtn").click(function () {
                 const passwordInput = $("#cmtDeletePasswordInput").val();
                 // 받아올 데이터 "1" 부분에 입력
                 if (passwordInput.trim() === "") {
                     alert("비밀번호를 입력해주세요.");
                 } else {
                     $("#cmtDeleteModal").css("display", "none");
-                    onDeleteComment(id, passwordInput);
+                    onDeleteComment($("#commentNumber").val(), passwordInput);
+                    $("#commentNumber").remove();
                 }
             });
+        });
+
+        // 수정 모달 클릭
+        function onUpdateCommentModal(id) {
+            const commentTextarea = "#comment-box-" + id;
+            $(commentTextarea).append("<input id='commentNumber' type='hidden' value='" + id + "' />");
+            if ($("#edit-active").length > 0) {
+                alert("한번에 두가지 댓글 수정불가");
+                return;
+            } else {
+                $("#cmtPasswordModal").css("display", "block");
+            }
         }
 
-        function onSaveComment(id) {
-            let commentBox = document.getElementById("comment-box-" + id);
-            let textarea = commentBox.querySelector(".edit-textarea");
-            let content = textarea.value;
+        // 수정 삭제 클릭
+        function onDeleteCommentModal(id) {
+            const commentTextarea = "#comment-box-" + id;
+            $(commentTextarea).append("<input id='commentNumber' type='hidden' value='" + id + "' />");
 
-            // 수정이 완료되면 처리하는 로직 작성
-
-            commentBox.querySelector(".content p").innerText = content;
-            commentBox.querySelector(".edit-box").style.display = "none";
+            $("#cmtDeleteModal").css("display", "block");
         }
     </script>
 </html>

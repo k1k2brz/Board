@@ -122,7 +122,6 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         <button class="board_page_prev bi-icon" type="button" onClick='onPageMove(<c:out value="${pagination.prevPage}" />)' <c:if test="${pagination.currPage <= 1}">disabled</c:if>>
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">    
-                                    <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                     <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
                                 </svg>
                             </div>
@@ -162,7 +161,6 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
         </div>
     </body>
     <script>
-        // Focus가 처음 Load될 때만 잡히게 하기
         const userId = $("#bbsId");
         const form = $("#frm")[0];
         const searchInput = $(".board_search-input");
@@ -260,13 +258,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                     "11월",
                     "12월",
                 ],
-                onSelect: function(day) { 
-                    // alert(day)
-                }
             });
         });
-
-        $(".datepicker").datepicker(); 
-
     </script>
 </html>

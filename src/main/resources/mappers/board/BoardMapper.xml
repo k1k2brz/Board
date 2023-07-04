@@ -78,36 +78,6 @@
 		bbs_Id=#{bbsId}
 	</update>
 
-
-	<!-- <resultMap id="resultMap" type="com.eh.neighbor.board.service.vo.BoardVO">
-	    <id property="bbsId" column="bbs_id" />
-	    <result property="bbsSj" column="bbs_sj" />
-	    <result property="wrter" column="wrter" />
-	    <result property="bbsCn" column="bbs_cn" />
-	    <result property="writngDt" column="writng_dt" />
-	    <result property="updtDt" column="updt_dt" />
-	    <result property="rdcnt" column="rdcnt" />
-	    <result property="updusr" column="updusr" />
-	    
-	    <association column="cmt" property="commentVO" javaType="com.eh.neighbor.board.service.vo.CommentVO">
-	    	<id property="bbsId" column="bbs_id" />
-		    <result property="answerId" column="answer_id" />
-		    <result property="answerWrter" column="answer_wrter" />
-		    <result property="answerCn" column="answer_cn" />
-		    <result property="writngDt" column="writng_dt" />
-		    <result property="updtDt" column="updt_dt" />
-		    <result property="answerUpdusr" column="answer_updusr" />
-	    </association>
-	</resultMap> -->
-
-	<!-- <select id="selectUpdate"
-		resultMap="resultMap">
-		SELECT wrt.bbs_id, wrt.bbs_sj, wrt.wrter, wrt.bbs_cn, wrt.writng_dt, wrt.updt_dt, wrt.rdcnt, wrt.updusr,
-		cmt.answer_id, cmt.answer_wrter, cmt.answer_cn, cmt.writng_dt, cmt.updt_dt, cmt.answer_updusr
-		FROM tb_bbs wrt join tb_bbs_answer cmt
-		on wrt.bbs_id = cmt.bbs_id
-		where wrt.bbs_id=#{bbsId}
-	</select> -->
 	
 	<select id="selectUpdate"
 		parameterType="com.eh.neighbor.board.service.vo.BoardVO"
@@ -157,9 +127,9 @@
 		where bbs_id=#{bbsId}
 	</update>
 	
-	<update id="updateCommentWrite"
+	<update id="updateComment"
 		parameterType="com.eh.neighbor.board.service.vo.CommentVO">
-		update tb_bbs_answer set answer_cn=#{answerCn}, answer_updusr=#{answerWrter}, updt_dt=now()
+		update tb_bbs_answer set answer_cn=#{answerCn}, updt_dt=now()
 		where answer_id=#{answerId}
 	</update>
 

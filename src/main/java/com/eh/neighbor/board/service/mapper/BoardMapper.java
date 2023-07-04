@@ -21,7 +21,7 @@ public interface BoardMapper {
 	
 	public void updateBoard(BoardVO boardVO);
 	public CommentVO commentCompare(CommentVO commentVO);
-	public CommentVO updateComment(CommentVO commentVO);
+	public void updateComment(CommentVO commentVO);
 	
 	public void deleteBoard(BoardVO boardVO);
 	public void deleteComment(CommentVO commentVO);

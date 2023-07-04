@@ -41,7 +41,7 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                         </div>
                         <div class="write_content">
                             <P class="write_text">내용</P>
-                            <!-- 정렬 맞추면 공백 생김 -->
+                            <!-- 정렬을 맞추면 공백이 생긴다 -->
                             <textarea rows="12" cols="80" name="bbsCn" class="content" maxlength="2000">
 <c:out value="${selectUpdate.bbsCn}" /></textarea
                             >
@@ -85,7 +85,6 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                 cache: false,
                 data: formData,
                 success: function (data, status) {
-                    console.log(data.resultFlag, data, status);
                     if (data.success === "success") {
                         alert(status);
                         onUpdateCancel($("#bbsId").val())
@@ -94,8 +93,6 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                     }
                 },
                 error: function (xhr, error) {
-                    console.log("res : " + xhr);
-                    console.log("e : " + error);
                     alert("ERROR");
                 },
             });

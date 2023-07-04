@@ -28,10 +28,7 @@ public class CommentVO implements Serializable {
 
 	// 수정자
 	private String answerUpdusr;
-
-	// rownum
-	private int rn;
-
+	
 	
 	// Getter Setter
 	
@@ -97,13 +94,5 @@ public class CommentVO implements Serializable {
 
 	public void setAnswerUpdusr(String answerUpdusr) {
 		this.answerUpdusr = answerUpdusr;
-	}
-
-	public int getRn() {
-		return rn;
-	}
-
-	public void setRn(int rn) {
-		this.rn = rn;
 	}
 }

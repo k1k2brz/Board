@@ -111,8 +111,6 @@ charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false"%>
                             }
                         },
                         error: function (xhr, error) {
-                            console.error("res : " + xhr);
-                            console.log("e : " + error);
                             alert("ERROR");
                         },
                     });

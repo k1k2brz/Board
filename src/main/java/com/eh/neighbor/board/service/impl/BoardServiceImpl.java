@@ -69,8 +69,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public CommentVO updateComment(CommentVO commentVO) {
-		return boardMapper.updateComment(commentVO);
+	public void updateComment(CommentVO commentVO) {
+		boardMapper.updateComment(commentVO);
 	}
 	
 	@Override

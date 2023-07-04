@@ -27,7 +27,7 @@ public interface BoardService  {
 	void updateBoard(BoardVO boardVO);
 	
 	CommentVO commentCompare(CommentVO commentVO);
-	CommentVO updateComment(CommentVO commentVO);
+	void updateComment(CommentVO commentVO);
 	
 	// Delete
 	void deleteBoard(BoardVO boardVO);
