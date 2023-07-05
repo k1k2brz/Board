@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 *.properties
 *.yml
+*.svn
 
 ### STS ###
 .apt_generated
