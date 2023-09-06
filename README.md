@@ -1,5 +1,5 @@
-# Board
-Spring CRUD Project
+# Board (Spring CRUD Project)
+<img src="https://github.com/k1k2brz/Board/assets/102219209/a31df271-c207-4657-b1cf-969dfa7146de" width="600" /><br />
 
 ## Technology Stacks
 <br />
